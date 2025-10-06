@@ -58,7 +58,9 @@ public class Main {
     /**
     3. Csg perceber a diferença entre as 2 implementações anteriores? Observe bem as operações implementadas.
     */
-
+    // R:
+    //  Sem sentinela → + verboso, exige tratamento especial pra list vazia e pra operações na head.
+    //  C sentinela → simplifica a lógica, pq o sentinela funciona cm um "guarda" fixo no início (ou até no fim, se usares 2 sentinelas).
 
 
     /**
