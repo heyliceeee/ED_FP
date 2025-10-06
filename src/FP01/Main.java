@@ -1,5 +1,8 @@
 package FP01;
 
+import java.util.Collection;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         /**
@@ -53,8 +56,8 @@ public class Main {
 
         /**
          ### 3. Alterar a classe UnorderedPair no slide 37 da Aula 01 de forma q seja possível efetuar 2 operações:
-              - Obter o valor do primeiro e segundo elem (2 métodos).
-              - Verificar se os 2 elems introduzidos são iguais
+              - Obter o valor do 1o e 2o elem (2 métodos).
+              - Verificar se os 2 elems introduzidos são ='s
          */
         UnorderedPair<String> up1 = new UnorderedPair<>("Alice", "Bob");
         UnorderedPair<String> up2 = new UnorderedPair<>("Bob", "Alice");
@@ -65,18 +68,20 @@ public class Main {
 
         System.out.println("up1.equals(up2)? " + up1.equals(up2)); // true
         System.out.println("up1.hasEqualElements()? " + up1.hasEqualElements()); // false
-        System.out.println("up3.hasEqualElements()? " + up3.hasEqualElements()+"\n\n")); // true
+        System.out.println("up3.hasEqualElements()? " + up3.hasEqualElements()+"\n\n"); // true
 
 
         /**
-         ### 4. Teste o código apresentado no slide 40 da Aula 01 de forma a obter a msg de erro na compilação. Consegue perceber o pq do erro?
+         ### 4. Teste o código apresentado no slide 40 da Aula 01 de forma a obter a msg de erro na compilação. Csg perceber o pq do erro?
          */
+        Collection<String> nomes = List.of("Alice", "Bob");
+        //printCollection(nomes); // ERRO de compilação
 
-
+        // R: Collection<String> n é um subtp de Collection<Object>
 
 
         /**
-         ### 5. Apresente uma solução pra o problema apresentado no slide 44 da Aula 01
+         ### 5. Apresente uma sol pra o problema apresentado no slide 44 da Aula 01
          */
 
 
@@ -85,5 +90,11 @@ public class Main {
          # Parte II
          ### 1. 
          */
+    }
+
+    private static void printCollection(Collection<Object> c) {
+        for (Object e: c){
+            System.out.println(e);
+        }
     }
 }
