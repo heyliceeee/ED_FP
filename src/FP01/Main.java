@@ -1,5 +1,6 @@
 package FP01;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -83,7 +84,17 @@ public class Main {
         /**
          ### 5. Apresente uma sol pra o problema apresentado no slide 44 da Aula 01
          */
+        // Problema: drawAll(List<Shape>) está limitado apenas a lists declaradas cm List<Shape>, e n aceita List<Circle> ou List<Rectangle>, mm q Circle e Rectangle sejam subclasses de Shape.
+        // R: alterar a assinatura pra drawAll(List<? extends Shape>). Assim, o método pode desenhar tds as formas, independentemente de serem Shape, Circle, Rectangle ou qlqr outra subclasse.
 
+        Canvas canvas = new Canvas();
+
+        // List de formas
+        List<Shape> shapes = Arrays.asList(new Circle(), new Rectangle());
+
+        canvas.draw(new Circle());
+        canvas.draw(new Rectangle());
+        canvas.drawAll(shapes);
 
 
         /**
