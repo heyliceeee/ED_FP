@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        /**
-         # Parte I
-         ### 1. Testa a classe TwoTypePair nos slides 26 e 27 da Aula 01 e observa o resultado.
-        */
+    /**
+    # Parte I
+    1. Testa a classe TwoTypePair nos slides 26 e 27 da Aula 01 e observa o resultado.
+    */
         // Criação do primeiro par (par1)
         TwoTypePair<String, Integer> par1 = new TwoTypePair<>("Alice", 25);
         System.out.println("Par1:");
@@ -38,9 +38,9 @@ public class Main {
         System.out.println(par3+"\n\n");
 
 
-        /**
-         ### 2. Testa a classe Pair no slide 32 da Aula 01
-         */
+    /**
+    2. Testa a classe Pair no slide 32 da Aula 01
+    */
         // Exemplo com inteiros
         Pair<Integer> p1 = new Pair<>(10, 20);
         System.out.println("Maior entre 10 e 20: " + p1.max());
@@ -55,11 +55,11 @@ public class Main {
         System.out.println(par3+"\n\n");
 
 
-        /**
-         ### 3. Alterar a classe UnorderedPair no slide 37 da Aula 01 de forma q seja possível efetuar 2 operações:
-              - Obter o valor do 1o e 2o elem (2 métodos).
-              - Verificar se os 2 elems introduzidos são ='s
-         */
+    /**
+    3. Alterar a classe UnorderedPair no slide 37 da Aula 01 de forma q seja possível efetuar 2 operações:
+        - Obter o valor do 1o e 2o elem (2 métodos).
+        - Verificar se os 2 elems introduzidos são ='s
+    */
         UnorderedPair<String> up1 = new UnorderedPair<>("Alice", "Bob");
         UnorderedPair<String> up2 = new UnorderedPair<>("Bob", "Alice");
         UnorderedPair<String> up3 = new UnorderedPair<>("Alice", "Alice");
@@ -72,20 +72,22 @@ public class Main {
         System.out.println("up3.hasEqualElements()? " + up3.hasEqualElements()+"\n\n"); // true
 
 
-        /**
-         ### 4. Teste o código apresentado no slide 40 da Aula 01 de forma a obter a msg de erro na compilação. Csg perceber o pq do erro?
-         */
+    /**
+    4. Teste o código apresentado no slide 40 da Aula 01 de forma a obter a msg de erro na compilação. Csg perceber o pq do erro?
+    */
         Collection<String> nomes = List.of("Alice", "Bob");
         //printCollection(nomes); // ERRO de compilação
 
         // R: Collection<String> n é um subtp de Collection<Object>
 
 
-        /**
-         ### 5. Apresente uma sol pra o problema apresentado no slide 44 da Aula 01
-         */
-        // Problema: drawAll(List<Shape>) está limitado apenas a lists declaradas cm List<Shape>, e n aceita List<Circle> ou List<Rectangle>, mm q Circle e Rectangle sejam subclasses de Shape.
-        // R: alterar a assinatura pra drawAll(List<? extends Shape>). Assim, o método pode desenhar tds as formas, independentemente de serem Shape, Circle, Rectangle ou qlqr outra subclasse.
+    /**
+    5. Apresente uma sol pra o problema apresentado no slide 44 da Aula 01
+    */
+        // Problema: drawAll(List<Shape>) está limitado apenas a lists declaradas cm List<Shape>, e n aceita List<Circle> ou
+        // List<Rectangle>, mm q Circle e Rectangle sejam subclasses de Shape.
+        // R: alterar a assinatura pra drawAll(List<? extends Shape>). Assim, o método pode desenhar tds as formas,
+        //  independentemente de serem Shape, Circle, Rectangle ou qlqr outra subclasse.
 
         Canvas canvas = new Canvas();
 
@@ -97,19 +99,20 @@ public class Main {
         canvas.drawAll(shapes);
 
 
-        /**
-         # Parte II
-         ### 1. Preencha os espaços em branco:
-         #### a) A declaração Store<T> é _uma classe generica_.
-         #### b) Store é uma _classe generica_, e T é o _parametro de tp_.
-         #### c) Store<String> é _uma instancia de tp (ou tp parametrizado) da classe generica Store_.
-         #### d) O uso de um tp parametrizado é conhecido cm _instanciacao de generico (ou simplesmente uso de genericos)_.
-         */
+    /**
+    # Parte II
+    1. Preencha os espaços em branco:
+        a) A declaração Store<T> é _uma classe generica_.
+        b) Store é uma _classe generica_, e T é o _parametro de tp_.
+        c) Store<String> é _uma instancia de tp (ou tp parametrizado) da classe generica Store_.
+        d) O uso de um tp parametrizado é conhecido cm _instanciacao de generico (ou simplesmente uso de genericos)_.
+    */
 
 
-        /**
-         ### 2. Considere os seguintes fragmentos de código Java (as 1as 3 linhas são ='s em tds; apenas a última linha apresenta diferenças). Pra cd um dos fragmentos, o código compila corretamente? Caso compile, é executado sem erros, ou existe alguma exceção?
-         */
+    /**
+    2. Considere os seguintes fragmentos de código Java (as 1as 3 linhas são ='s em tds; apenas a última linha apresenta diferenças). Pra cd um dos fragmentos, o código compila corretamente? Caso compile, é executado sem
+    erros, ou existe alguma exceção?
+    */
 
         /*
         Point[] a = new Point[10];
@@ -141,9 +144,9 @@ public class Main {
         // R: N compila
 
 
-        /**
-         ### 3. Oq acontece se escrevermos código análogo ao da 2ª questão, mas q faça uso de um ArrayList? P.ex:
-         */
+    /**
+    3. Oq acontece se escrevermos código análogo ao da 2ª questão, mas q faça uso de um ArrayList? P.ex:
+    */
 
         /*
         ArrayList<Point> a = new ArrayList<Point>();
@@ -155,9 +158,9 @@ public class Main {
         // R: ArrayList<Point> n pode ser atribuído a ArrayList<Object>, pq os genéricos em Java são invariantes.
 
 
-        /**
-         ### 4. Desenvolver uma app q ordene uma list de strings pré-definidas baseadas no tam da string. Usar o método Collections.sort. Atenção: deverá fzr uso de Generics.
-         */
+    /**
+    4. Desenvolver uma app q ordene uma list de strings pré-definidas baseadas no tam da string. Usar o método Collections.sort. Atenção: deverá fzr uso de Generics.
+    */
         // Lista pré-definida de strings
         List<String> palavras = new ArrayList<>();
         palavras.add("Java");
@@ -181,9 +184,9 @@ public class Main {
         System.out.println(palavras);
 
 
-        /**
-         ### 5. Escrever uma classe q haja cm uma livraria pra os seguintes tps de média: livro, vídeo e CD de música. Atenção: deverá fzr uso de Generics. Add APIs adicionais pra armazenar e obter média
-         */
+    /**
+    5. Escrever uma classe q haja cm uma livraria pra os seguintes tps de média: livro, vídeo e CD de música. Atenção: deverá fzr uso de Generics. Add APIs adicionais pra armazenar e obter média
+    */
         // Biblioteca de livros
         Library<Livro> bibliotecaLivros = new Library<>();
         bibliotecaLivros.addItem(new Livro("O Senhor dos Anéis"));
