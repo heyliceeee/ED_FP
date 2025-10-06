@@ -34,7 +34,25 @@ public class Main {
     2. Criar uma implementação de LL q use nodes sentinela. Esta Implementação deverá tbm possuir as operações Add e Remove.
     Pra q seja possível verificar a integridade da LL crie uma função q imprima tds os elems da list.
     */
+        LinkedList<String> llSentinel = new LinkedList<>();
 
+        // add: na head ou no tail sentinela
+        llSentinel.addFirstSentinel("C++");       // head
+        llSentinel.addFirstSentinel("Java");     // head
+        llSentinel.addLastSentinel("Python");    // tail
+
+        // imprime tds elems sentinela
+        System.out.println("Lista inicial sentinela:");
+        llSentinel.printListSentinel();
+
+        // remove: na head ou no tail sentinela
+        ll.removeFirstSentinel();
+        System.out.println("Depois de remover o primeiro sentinela:");
+        ll.printListSentinel();
+
+        ll.removeLastSentinel();
+        System.out.println("Depois de remover o último sentinela:");
+        ll.printListSentinel();
 
 
     /**
