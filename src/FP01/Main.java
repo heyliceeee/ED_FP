@@ -1,5 +1,6 @@
 package FP01;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -99,8 +100,46 @@ public class Main {
 
         /**
          # Parte II
-         ### 1. 
+         ### 1. Preencha os espaços em branco:
+         #### a) A declaração Store<T> é _uma classe generica_.
+         #### b) Store é uma _classe generica_, e T é o _parametro de tp_.
+         #### c) Store<String> é _uma instancia de tp (ou tp parametrizado) da classe generica Store_.
+         #### d) O uso de um tp parametrizado é conhecido cm _instanciacao de generico (ou simplesmente uso de genericos)_.
          */
+
+
+        /**
+         ### 2. Considere os seguintes fragmentos de código Java (as 1as 3 linhas são ='s em tds; apenas a última linha apresenta diferenças). Pra cd um dos fragmentos, o código compila corretamente? Caso compile, é executado sem erros, ou existe alguma exceção?
+         */
+
+        /*
+        Point[] a = new Point[10];
+        Object[] b;
+        b = a; // Point[] é um subtp de Object[] → compila
+        b[0] = new Point(10,20); // é válido, pq Point é compatível c Point[]
+         */
+
+        // R: executa sem erros
+
+
+        /*
+        Point[] a = new Point[10];
+        Object[] b;
+        b = a;
+        b[0] = "Magical Mystery Tour"; // tenta colocar um String dentro de um Point[] → isso gera ArrayStoreException
+        */
+
+        // R: Compila, mas lança exceção em tempo de execução.
+
+
+        /*
+        Point[] a = new Point[10];
+        Object[] b;
+        b = a;
+        a[0] = "Magical Mystery Tour"; // Atribuir "Magical Mystery Tour" (um String) diretamente a a[0] → erro de compilação, pq o compilador sb q a[0] deve ser um Point.
+         */
+
+        // R: N compila
     }
 
     private static void printCollection(Collection<Object> c) {
