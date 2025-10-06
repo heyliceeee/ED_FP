@@ -1,8 +1,7 @@
 package FP01;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 public class Main {
@@ -140,6 +139,70 @@ public class Main {
          */
 
         // R: N compila
+
+
+        /**
+         ### 3. Oq acontece se escrevermos código análogo ao da 2ª questão, mas q faça uso de um ArrayList? P.ex:
+         */
+
+        /*
+        ArrayList<Point> a = new ArrayList<Point>();
+        ArrayList<Object> b;
+        b = a; // tentativa de atribuicao
+        b.add(new Point(10,20));
+         */
+
+        // R: ArrayList<Point> n pode ser atribuído a ArrayList<Object>, pq os genéricos em Java são invariantes.
+
+
+        /**
+         ### 4. Desenvolver uma app q ordene uma list de strings pré-definidas baseadas no tam da string. Usar o método Collections.sort. Atenção: deverá fzr uso de Generics.
+         */
+        // Lista pré-definida de strings
+        List<String> palavras = new ArrayList<>();
+        palavras.add("Java");
+        palavras.add("Programação");
+        palavras.add("AI");
+        palavras.add("Genéricos");
+        palavras.add("Porto");
+
+        System.out.println("Antes da ordenação:");
+        System.out.println(palavras);
+
+        // Ordenação usando Collections.sort e Comparator genérico
+        Collections.sort(palavras, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return Integer.compare(s1.length(), s2.length());
+            }
+        });
+
+        System.out.println("\nDps da ordenação (por tam):");
+        System.out.println(palavras);
+
+
+        /**
+         ### 5. Escrever uma classe q haja cm uma livraria pra os seguintes tps de média: livro, vídeo e CD de música. Atenção: deverá fzr uso de Generics. Add APIs adicionais pra armazenar e obter média
+         */
+        // Biblioteca de livros
+        Library<Livro> bibliotecaLivros = new Library<>();
+        bibliotecaLivros.addItem(new Livro("O Senhor dos Anéis"));
+        bibliotecaLivros.addItem(new Livro("1984"));
+
+        // Biblioteca de vídeos
+        Library<Video> bibliotecaVideos = new Library<>();
+        bibliotecaVideos.addItem(new Video("Matrix"));
+        bibliotecaVideos.addItem(new Video("Inception"));
+
+        // Biblioteca de CDs
+        Library<CD> bibliotecaCDs = new Library<>();
+        bibliotecaCDs.addItem(new CD("Abbey Road"));
+        bibliotecaCDs.addItem(new CD("Dark Side of the Moon"));
+
+        // Mostrar conteúdos
+        System.out.println("Livros: " + bibliotecaLivros.getAllItems());
+        System.out.println("Vídeos: " + bibliotecaVideos.getAllItems());
+        System.out.println("CDs: " + bibliotecaCDs.getAllItems());
     }
 
     private static void printCollection(Collection<Object> c) {
