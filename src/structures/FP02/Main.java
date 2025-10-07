@@ -139,11 +139,41 @@ public class Main {
     /**
     3. Alterar a DLL de forma q esta seja capaz de devolver uma nova DLL c apenas os elems pares (smp q for instanciada c tps inteiros).
     */
+        DoublyLinkedList<Integer> dll3 = new DoublyLinkedList<>();
 
+        dll3.addFirst(7);
+        dll3.addFirst(14);
+        dll3.addFirst(23);
+        dll3.addFirst(42);
+
+        System.out.println("Elementos pares da DLL: " + dll3.getEvenElements().toString());
 
 
     /**
     4. Alterar a DLL de forma q esta seja capaz de permitir sbr qts elems ='s a um dado elem q é passado por parâmetro estão presentes na DLL. Remover tds esses elems e manter a integridade da DLL
     */
+        dll3.addFirst(7);
+        dll3.addFirst(14);
+        dll3.addFirst(23);
+        dll3.addFirst(42);
+        dll3.addFirst(7);
+        dll3.addFirst(14);
+        dll3.addFirst(23);
+        dll3.addFirst(42);
+        dll3.addFirst(7);
+        dll3.addFirst(14);
+        dll3.addFirst(23);
+        dll3.addFirst(42);
+        dll3.addFirst(7);
+        dll3.addFirst(14);
+        dll3.addFirst(23);
+        dll3.addFirst(42);
+
+        System.out.println("ANTES: " + dll3);
+
+        System.out.println("existe " + dll3.getManyElementsEquals(23)+ " elementos repetidos de 23");
+        dll3.removeDuplicateElements(23);
+
+        System.out.println("DEPOIS: " + dll3);
     }
 }

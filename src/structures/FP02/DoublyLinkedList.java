@@ -260,4 +260,107 @@ public class DoublyLinkedList<T> {
     public boolean isEmpty() {
         return size <= 0;
     }
+
+    /**
+     * Devolver elementos pares da lista
+     * @return lista com os elementos pares
+     */
+    public DoublyLinkedList<Integer> getEvenElements() {
+        // Verifica se o tipo armazenado na lista é mesmo Integer
+        if (!(head.getElement() instanceof Integer)) {
+            throw new UnsupportedOperationException("Esta operação só é válida para listas de inteiros.");
+        }
+
+        DoublyLinkedList<Integer> evenList = new DoublyLinkedList<>(); // Cria uma nova DLL que vai guardar apenas os elementos pares
+        DoublyNode<T> current = head; // Começa a percorrer a lista a partir do head
+
+        // Percorre todos os nodes
+        while (current != null) {
+            Integer value = (Integer) current.getElement(); // Converte o elemento para Integer
+
+            // Se for par, adiciona-o à evenList
+            if (value % 2 == 0) {
+                evenList.addFirst(value); // insere sempre no início da nova lista
+            }
+
+            current = current.getNext(); // vai para o node seguinte (i++)
+        }
+
+        return evenList; //retorna lista de elementos pares
+    }
+
+    /**
+     * devolver a quantidade de elementos repetidos, dado um elemento
+     * @param element elemento dado
+     * @return quantidade de elementos repetidos
+     */
+    public int getManyElementsEquals(T element) {
+        DoublyNode<T> current = head; //elemento da cabeca (primeiro elemento)
+        int quantity = 0;
+
+        for (int i = 0; current != null; i++) {
+            if (current.getElement().equals(element)) { //verifica se o elemento atual é = ao element
+                quantity++;
+            }
+
+            current = current.getNext(); //vai para o seguinte elemento
+        }
+
+        return quantity;
+    }
+
+    /**
+     * remove os elementos duplicados, dado um elemento
+     * @param element elemento dado
+     */
+    public void removeDuplicateElements(T element) {
+        DoublyNode<T> current = head; //elemento atual
+        boolean foundFirst = false; //para controlar se já encontramos o primeiro elemento
+
+        while (current != null) { //vai percorrendo os elementos
+            if (current.getElement().equals(element)) { //elemento atual = elemento q vai ser removido
+                if(foundFirst){ //se já encontrou o primeiro elemento, remove
+
+                    if (current.getPrev() != null) { //existe o elemento anterior ao atual
+                        current.getPrev().setNext(current.getNext()); //elemento seguinte ao anterior do atual = elemento seguinte do atual
+                    }
+
+                    if (current.getNext() != null) { //existe o elemento seguinte ao atual
+                        current.getNext().setPrev(current.getPrev()); //elemento anterior ao seguinte do atual = elemento anterior do atual
+                    }
+
+                    //depois de remover um elemento...
+                    DoublyNode<T> temp = current.getNext(); //temp = elemento seguinte do atual
+                    current.setNext(null); //elemento seguinte do atual = nulo
+                    current.setPrev(null); //elemento anterior do atual = nulo
+                    current = temp; //atual = elemento seguinte do atual
+
+                } else { //se NÃO já encontrou o primeiro elemento (primeira vez agora)
+                    foundFirst = true;
+                    current = current.getNext(); //atual = elemento seguinte do atual
+                }
+
+            } else { //elemento atual != elemento q vai ser removido
+                current = current.getNext(); //atual = elemento seguinte do atual
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "Lista vazia.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        DoublyNode<T> current = head;
+
+        while (current != null) {
+            sb.append(current.getElement()).append(" <-> ");
+            current = current.getNext();
+        }
+
+        sb.append("null");
+        return sb.toString();
+    }
 }
