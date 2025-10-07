@@ -1,14 +1,14 @@
-package FP01;
+package structures.FP01;
 
-public class Video {
+public class CD {
     private String titulo;
 
-    public Video(String titulo) {
+    public CD(String titulo) {
         this.titulo = titulo;
     }
 
     @Override
     public String toString() {
-        return "Vídeo: " + titulo;
+        return "CD: " + titulo;
     }
 }

@@ -1,4 +1,4 @@
-package FP01;
+package structures.FP01;
 
 import java.util.List;
 

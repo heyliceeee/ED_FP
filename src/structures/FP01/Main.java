@@ -1,6 +1,5 @@
-package FP01;
+package structures.FP01;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

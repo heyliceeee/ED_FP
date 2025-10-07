@@ -1,4 +1,4 @@
-package FP01;
+package structures.FP01;
 
 public class TwoTypePair<T1, T2> {
     private T1 first;

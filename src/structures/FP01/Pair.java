@@ -1,4 +1,4 @@
-package FP01;
+package structures.FP01;
 
 public class Pair<T extends Comparable<T>> {
     private T first;

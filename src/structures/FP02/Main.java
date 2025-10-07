@@ -1,5 +1,7 @@
-package FP02;
+package structures.FP02;
 
+
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -105,7 +107,11 @@ public class Main {
          ▪ Qual a diferença entre um array e uma LL?
          ▪ Qual a diferença entre uma LL e uma DLL?
      */
-
+    // R:
+    //      ▪ nodes, head e tail
+    //      ▪ guardar dados e referências pra ligar a list
+    //      ▪ array tem acesso direto e tam fixo; LL é dinâmica, mas acesso é sequencial
+    //      ▪ LL liga só pra frente; DLL liga pra frente e pra trás, ocupa + memória mas facilita remoções
 
 
     /**
@@ -115,7 +121,19 @@ public class Main {
          ▪ Devolver um array de tds os elems dps de uma dada posição.
          ▪ Devolver um array de tds os elems entre um intervalo de posições.
     */
+        DoublyLinkedList<String> dll2 = new DoublyLinkedList<>();
 
+        dll2.addFirst("C++");
+        dll2.addFirst("Python");
+        dll2.addFirst("Java");
+        dll2.addFirst("Rust");
+
+        dll2.printList();
+
+        System.out.println("Array completo: " + Arrays.toString(dll2.toArray())); // Devolver um array dos elems
+        System.out.println("Até posição 2: " + Arrays.toString(dll2.toArrayUntil(2))); // Devolver um array de tds os elems até uma dada posição
+        System.out.println("Depois da posição 1: " + Arrays.toString(dll2.toArrayAfter(1))); // Devolver um array de tds os elems dps de uma dada posição
+        System.out.println("Entre posições 1 e 2: " + Arrays.toString(dll2.toArrayBetween(1, 2))); // Devolver um array de tds os elems entre um intervalo de posições
 
 
     /**

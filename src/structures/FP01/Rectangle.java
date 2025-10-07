@@ -1,4 +1,4 @@
-package FP01;
+package structures.FP01;
 
 public class Rectangle extends Shape {
     @Override
