@@ -10,6 +10,7 @@ public class Main {
     Atenção: N confundir c a classe java.util.LinkedList (disponível na plataforma de coleções do Java)
     */
         LinkedList<String> ll = new LinkedList<>();
+        System.out.println("LINKED LIST");
 
         // add: na head ou no tail
         ll.addFirst("C++");       // head
@@ -35,6 +36,7 @@ public class Main {
     Pra q seja possível verificar a integridade da LL crie uma função q imprima tds os elems da list.
     */
         LinkedList<String> llSentinel = new LinkedList<>();
+        System.out.println("LINKED LIST com sentinel nodes");
 
         // add: na head ou no tail sentinela
         llSentinel.addFirstSentinel("C++");       // head
@@ -71,7 +73,28 @@ public class Main {
         ▪ Indicar se a list está vazia ou n.
         ▪ Criar uma função pra percorrer e imprimir tds os elems da list.
     */
+        DoublyLinkedList<String> dll = new DoublyLinkedList<>();
+        System.out.println("DOUBLY LINKED LIST");
 
+        // add: na head ou no tail
+        dll.addFirst("C++");       // head
+        dll.addFirst("Python");     // head
+        dll.addFirst("Java");    // head
+
+        // imprime tds elems
+        System.out.println("Lista inicial:");
+        dll.printList();
+
+        // remove: na head ou no tail
+        dll.removeFirst();
+        System.out.println("Depois de remover o primeiro:");
+        dll.printList();
+
+        dll.removeLast();
+        System.out.println("Depois de remover o último:");
+        dll.printList();
+
+        System.out.println("A lista está vazia? " + dll.isEmpty());
 
 
     /**
