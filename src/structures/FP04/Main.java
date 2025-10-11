@@ -61,13 +61,32 @@ public class Main {
         /**
          4. Implementar o programa pra a codificação de msgs c recurso a uma CircularArrayQueue cm é sugerido no slide 13.
          */
+        int[] keys = {1, 3, 2}; // Chaves de deslocamento (ciclo)
+        MessageEncoder encoder = new MessageEncoder(keys);
 
+        String encoded = encoder.encode("HELLO QUEUE");
+
+        // criar NOVO encoder para decodificar
+        MessageEncoder decoder = new MessageEncoder(keys);
+        String decoded = decoder.decode(encoded);
+
+        System.out.println("Original: HELLO QUEUE");
+        System.out.println("Codificada: " + encoded);
+        System.out.println("Decodificada: " + decoded);
 
 
         /**
          5. Implementar o mm programa pra a codificação de msgs (do exercício anterior) c recurso a uma LinkedQueue.
          */
+        MessageEncoderLinked encoder1 = new MessageEncoderLinked(keys);
 
+        String original = "HELLO QUEUE";
+        String encoded1 = encoder1.encode(original);
+        String decoded1 = encoder1.decode(encoded);
+
+        System.out.println("Original: " + original);
+        System.out.println("Codificada: " + encoded1);
+        System.out.println("Decodificada: " + decoded1);
 
 
         /**
