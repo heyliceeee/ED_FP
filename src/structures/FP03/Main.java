@@ -27,7 +27,7 @@ public class Main {
 
 
         /**
-         2. Implementar a LinkedStack cm é sugerido no Slide 32
+         * 2. Implementar a LinkedStack cm é sugerido no Slide 32
          */
         LinkedStack<String> history = new LinkedStack<>();
 

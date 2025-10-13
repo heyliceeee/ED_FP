@@ -48,9 +48,8 @@ public class ArrayStack<T> implements StackADT<T> {
         T[] newStack = (T[]) new Object[stack.length * 2]; //cria uma nova stack com o dobro da capacidade da stack anterior
 
         //copiar os elementos da stack anterior para a nova stack
-        for(int i=0; i < stack.length; i++) {
+        for(int i=0; i < stack.length; i++)
             newStack[i] = stack[i];
-        }
 
         stack = newStack; //a stack agora é a stack expandida
     }
@@ -63,7 +62,6 @@ public class ArrayStack<T> implements StackADT<T> {
      */
     @Override
     public T pop() throws EmptyCollectionException {
-
         if(isEmpty()) //se stack estiver vazia
             throw new EmptyCollectionException("Stack");
 

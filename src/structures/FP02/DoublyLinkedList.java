@@ -1,5 +1,7 @@
 package structures.FP02;
 
+import exceptions.EmptyCollectionException;
+
 public class DoublyLinkedList<T> {
     protected DoublyNode<T> head, tail;
     protected int size;
@@ -36,11 +38,9 @@ public class DoublyLinkedList<T> {
      * remover node da head
      *
      */
-    public void removeFirst() {
-        if (head == null || size == 0) { //lista vazia
-            System.out.println("Lista vazia, nada a remover.");
-            return;
-        }
+    public void removeFirst() throws EmptyCollectionException {
+        if (head == null || size == 0) //lista vazia
+            throw new EmptyCollectionException("List");
 
         DoublyNode<T> removedNode = head; //elemento que está na head e q vai ser removido
 
@@ -59,11 +59,9 @@ public class DoublyLinkedList<T> {
      * remover node da tail
      *
      */
-    public void removeLast() {
-        if (tail == null || size == 0) { //lista vazia
-            System.out.println("Lista vazia, nada a remover.");
-            return;
-        }
+    public void removeLast() throws EmptyCollectionException {
+        if (tail == null || size == 0) //lista vazia
+            throw new EmptyCollectionException("List");
 
         DoublyNode<T> removedNode = tail; //elemento que está na tail e q vai ser removido
 
@@ -81,11 +79,9 @@ public class DoublyLinkedList<T> {
     /**
      * Imprimir todos os elementos
      */
-    public void printList() {
-        if (isEmpty()) {
-            System.out.println("Lista vazia.");
-            return;
-        }
+    public void printList() throws EmptyCollectionException {
+        if (isEmpty()) // lista vazia
+            throw new EmptyCollectionException("List");
 
         DoublyNode<T> current = head;
 
@@ -131,16 +127,14 @@ public class DoublyLinkedList<T> {
      * @param pos
      * @return array
      */
-    public Object[] toArrayUntil(int pos) {
-        if (pos < 0) {
+    public Object[] toArrayUntil(int pos) throws IllegalArgumentException {
+        if (pos < 0)
             throw new IllegalArgumentException("a posicao deve ser nao negativa");
-        }
 
         DoublyNode<T> current = head;
 
-        while (current != null) {
+        while (current != null)
             current = current.getNext();
-        }
 
         int effectiveSize = Math.min(pos, size); //se a position for maior do que o tamanho da lista, limite-a ao tamanho
 
@@ -164,10 +158,9 @@ public class DoublyLinkedList<T> {
      * @param pos
      * @return array
      */
-    public Object[] toArrayAfter(int pos) {
-        if (pos < 0) {
+    public Object[] toArrayAfter(int pos) throws IllegalArgumentException {
+        if (pos < 0)
             throw new IllegalArgumentException("a posicao deve ser nao negativa");
-        }
 
         DoublyNode<T> current = head;
         int y = 0;
@@ -178,9 +171,8 @@ public class DoublyLinkedList<T> {
         }
 
         //se a position for >= doq o tamanho da list, retorne um array vazio
-        if (current == null) {
+        if (current == null)
             return new Object[0];
-        }
 
         int effectiveSize = 0;
         DoublyNode<T> temp = current;
@@ -210,10 +202,9 @@ public class DoublyLinkedList<T> {
      * @param end posicao final
      * @return array
      */
-    public Object[] toArrayBetween(int start, int end) {
-        if (start < 0 || end < 0 || start > end) {
+    public Object[] toArrayBetween(int start, int end) throws IllegalArgumentException {
+        if (start < 0 || end < 0 || start > end)
             throw new IllegalArgumentException("a posicao deve ser nao negativa");
-        }
 
         DoublyNode<T> current = head;
 
@@ -225,9 +216,8 @@ public class DoublyLinkedList<T> {
         }
 
         //se a start for >= ao tamanho da lista, retorne um array vazio
-        if (current == null) {
+        if (current == null)
             return new Object[0];
-        }
 
         int length = 0;
         DoublyNode<T> temp = current;
@@ -265,11 +255,12 @@ public class DoublyLinkedList<T> {
      * Devolver elementos pares da lista
      * @return lista com os elementos pares
      */
-    public DoublyLinkedList<Integer> getEvenElements() {
-        // Verifica se o tipo armazenado na lista é mesmo Integer
-        if (!(head.getElement() instanceof Integer)) {
+    public DoublyLinkedList<Integer> getEvenElements() throws UnsupportedOperationException, EmptyCollectionException {
+        if (!(head.getElement() instanceof Integer)) // Verifica se o tipo armazenado na lista é mesmo Integer
             throw new UnsupportedOperationException("Esta operação só é válida para listas de inteiros.");
-        }
+
+        if (isEmpty()) // lista vazia
+            throw new EmptyCollectionException("List");
 
         DoublyLinkedList<Integer> evenList = new DoublyLinkedList<>(); // Cria uma nova DLL que vai guardar apenas os elementos pares
         DoublyNode<T> current = head; // Começa a percorrer a lista a partir do head
@@ -279,9 +270,8 @@ public class DoublyLinkedList<T> {
             Integer value = (Integer) current.getElement(); // Converte o elemento para Integer
 
             // Se for par, adiciona-o à evenList
-            if (value % 2 == 0) {
+            if (value % 2 == 0)
                 evenList.addFirst(value); // insere sempre no início da nova lista
-            }
 
             current = current.getNext(); // vai para o node seguinte (i++)
         }
@@ -294,14 +284,19 @@ public class DoublyLinkedList<T> {
      * @param element elemento dado
      * @return quantidade de elementos repetidos
      */
-    public int getManyElementsEquals(T element) {
+    public int getManyElementsEquals(T element) throws UnsupportedOperationException, EmptyCollectionException {
+        if (!(head.getElement() instanceof Integer)) // Verifica se o tipo armazenado na lista é mesmo Integer
+            throw new UnsupportedOperationException("Esta operação só é válida para listas de inteiros.");
+
+        if (isEmpty()) // lista vazia
+            throw new EmptyCollectionException("List");
+
         DoublyNode<T> current = head; //elemento da cabeca (primeiro elemento)
         int quantity = 0;
 
         for (int i = 0; current != null; i++) {
-            if (current.getElement().equals(element)) { //verifica se o elemento atual é = ao element
+            if (current.getElement().equals(element)) //verifica se o elemento atual é = ao element
                 quantity++;
-            }
 
             current = current.getNext(); //vai para o seguinte elemento
         }
@@ -320,14 +315,11 @@ public class DoublyLinkedList<T> {
         while (current != null) { //vai percorrendo os elementos
             if (current.getElement().equals(element)) { //elemento atual = elemento q vai ser removido
                 if(foundFirst){ //se já encontrou o primeiro elemento, remove
-
-                    if (current.getPrev() != null) { //existe o elemento anterior ao atual
+                    if (current.getPrev() != null) //existe o elemento anterior ao atual
                         current.getPrev().setNext(current.getNext()); //elemento seguinte ao anterior do atual = elemento seguinte do atual
-                    }
 
-                    if (current.getNext() != null) { //existe o elemento seguinte ao atual
+                    if (current.getNext() != null) //existe o elemento seguinte ao atual
                         current.getNext().setPrev(current.getPrev()); //elemento anterior ao seguinte do atual = elemento anterior do atual
-                    }
 
                     //depois de remover um elemento...
                     DoublyNode<T> temp = current.getNext(); //temp = elemento seguinte do atual
@@ -340,17 +332,15 @@ public class DoublyLinkedList<T> {
                     current = current.getNext(); //atual = elemento seguinte do atual
                 }
 
-            } else { //elemento atual != elemento q vai ser removido
+            } else //elemento atual != elemento q vai ser removido
                 current = current.getNext(); //atual = elemento seguinte do atual
-            }
         }
     }
 
     @Override
-    public String toString() {
-        if (isEmpty()) {
-            return "Lista vazia.";
-        }
+    public String toString() throws EmptyCollectionException {
+        if (isEmpty())
+            throw new EmptyCollectionException("List");
 
         StringBuilder sb = new StringBuilder();
         DoublyNode<T> current = head;

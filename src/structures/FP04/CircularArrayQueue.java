@@ -19,8 +19,7 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     /**
      * cria um array vazia e nula
      */
-    public CircularArrayQueue()
-    {
+    public CircularArrayQueue() {
         this.size = this.front = this.rear = 0;
         this.queue = (T[]) (new Object[this.DEFAULT_CAPACITY]);
     }
@@ -28,8 +27,7 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     /**
      * cria um array
      */
-    public CircularArrayQueue(int initialCapacity)
-    {
+    public CircularArrayQueue(int initialCapacity) {
         this.size = this.front = this.rear = 0;
         this.queue = (T[]) (new Object[initialCapacity]);
     }
@@ -44,11 +42,10 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     @Override
     public void enqueue(T element) {
         if(isFull()) //se a queue tiver cheia
-        {
             expandCapacity(); //expande
-        } else
-        {
-            queue[rear] = element; //rear = novo elemento
+
+        else {
+            queue[rear] = element; //rear = novo elemento no final
             rear = (rear + 1) % queue.length; //rear volta á posicao inicial
 
             size++;
@@ -64,14 +61,13 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
      * @throws RuntimeException se a fila estiver vazia (a exceção específica depende da implementação).
      */
     @Override
-    public T dequeue() {
+    public T dequeue() throws EmptyCollectionException {
         T result;
 
         if(isEmpty()) //se queue estiver vazia
-        {
             throw new EmptyCollectionException("Queue");
-        } else
-        {
+
+        else {
             result = queue[front]; //elemento front
             queue[front] = null; //elemento front passa a ser nulo (foi removido)
 
@@ -92,11 +88,9 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
      * @throws RuntimeException se a fila estiver vazia (a exceção específica depende da implementação).
      */
     @Override
-    public T first() {
+    public T first() throws EmptyCollectionException {
         if(isEmpty()) //se queue estiver vazia
-        {
             throw new EmptyCollectionException("Queue");
-        }
 
         return queue[front];
     }
@@ -133,8 +127,7 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     /**
      * expande o array
      */
-    private void expandCapacity()
-    {
+    private void expandCapacity() {
         newQueue = (T[]) (new Object[DEFAULT_CAPACITY]);
 
         T[] copyQueue = Stream.concat(Arrays.stream(queue), Arrays.stream(newQueue)).toArray(size -> (T[]) Array.newInstance(queue.getClass().getComponentType(), size));

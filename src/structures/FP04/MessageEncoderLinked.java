@@ -12,9 +12,8 @@ public class MessageEncoderLinked {
     // Reinicializa a fila com as chaves originais
     private void resetQueue() {
         keyQueue = new LinkedQueue<>();
-        for (int k : keys) {
+        for (int k : keys)
             keyQueue.enqueue(k);
-        }
     }
 
     public String encode(String message) {

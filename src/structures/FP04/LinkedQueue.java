@@ -58,6 +58,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
         if (isEmpty()) { // Se a fila está vazia
             front = newNode;
             rear = newNode;
+
         } else {
             rear.setNext(newNode); // O próximo do nó traseiro é o novo nó
             rear = newNode;       // Atualiza o nó traseiro
@@ -75,19 +76,17 @@ public class LinkedQueue<T> implements QueueADT<T> {
      * @throws RuntimeException se a fila estiver vazia (a exceção específica depende da implementação).
      */
     @Override
-    public T dequeue() {
-        if (isEmpty()) {
+    public T dequeue() throws EmptyCollectionException {
+        if (isEmpty())
             throw new EmptyCollectionException("Queue");
-        }
 
         T result = front.getElement(); // Obtém o elemento do nó frontal
         front = front.getNext();       // Avança o nó frontal para o próximo
 
-        size--;
+        size--; // decrementa-se o tamanho do queue, porque retirou-se um elemento
 
-        if (isEmpty()) { // Se a fila está vazia após a remoção
+        if (isEmpty()) // Se a fila está vazia após a remoção
             rear = null;
-        }
 
         return result;
     }
@@ -101,10 +100,9 @@ public class LinkedQueue<T> implements QueueADT<T> {
      * @throws RuntimeException se a fila estiver vazia (a exceção específica depende da implementação).
      */
     @Override
-    public T first() {
-        if (isEmpty()) {
+    public T first() throws EmptyCollectionException {
+        if (isEmpty())
             throw new EmptyCollectionException("Queue");
-        }
 
         return front.getElement();
     }

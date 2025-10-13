@@ -5,9 +5,9 @@ public class MessageEncoder {
 
     public MessageEncoder(int[] keys) {
         keyQueue = new CircularArrayQueue<>(keys.length);
-        for (int k : keys) {
+
+        for (int k : keys)
             keyQueue.enqueue(k);
-        }
     }
 
     // Codifica a mensagem deslocando cada char pelo valor da chave

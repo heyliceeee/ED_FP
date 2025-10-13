@@ -21,27 +21,25 @@ public class QueueWithTwoStacks<T> implements QueueADT<T> {
 
     @Override
     public T dequeue() throws EmptyCollectionException {
-        if (isEmpty()) {
+        if (isEmpty())
             throw new EmptyCollectionException("Queue");
-        }
+
         if (outStack.isEmpty()) {
             // transferir todos os elementos de inStack para outStack
-            while (!inStack.isEmpty()) {
+            while (!inStack.isEmpty())
                 outStack.push(inStack.pop());
-            }
         }
         return outStack.pop();
     }
 
     @Override
     public T first() throws EmptyCollectionException {
-        if (isEmpty()) {
+        if (isEmpty())
             throw new EmptyCollectionException("Queue");
-        }
+
         if (outStack.isEmpty()) {
-            while (!inStack.isEmpty()) {
+            while (!inStack.isEmpty())
                 outStack.push(inStack.pop());
-            }
         }
         return outStack.peek();
     }

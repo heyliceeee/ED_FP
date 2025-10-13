@@ -12,20 +12,18 @@ public class QueueMerger {
         LinkedQueue<Integer> result = new LinkedQueue<>();
 
         while (!q1.isEmpty() && !q2.isEmpty()) {
-            if (q1.first() <= q2.first()) {
+            if (q1.first() <= q2.first())
                 result.enqueue(q1.dequeue());
-            } else {
+            else
                 result.enqueue(q2.dequeue());
-            }
         }
 
         // Se ainda restarem elementos em alguma fila, adiciona todos
-        while (!q1.isEmpty()) {
+        while (!q1.isEmpty())
             result.enqueue(q1.dequeue());
-        }
-        while (!q2.isEmpty()) {
+
+        while (!q2.isEmpty())
             result.enqueue(q2.dequeue());
-        }
 
         return result;
     }
