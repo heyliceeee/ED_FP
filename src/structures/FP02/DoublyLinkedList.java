@@ -277,7 +277,7 @@ public class DoublyLinkedList<T> {
             if (value % 2 == 0)
                 evenList.addFirst(value); // insere sempre no início da nova lista
 
-            current = current.getNext(); // vai para o node seguinte (i++)
+            current = current.getPrev(); // vai para o node anterior (i--)
         }
 
         return evenList; //retorna lista de elementos pares
@@ -313,31 +313,35 @@ public class DoublyLinkedList<T> {
      * @param element elemento dado
      */
     public void removeDuplicateElements(T element) {
-        DoublyNode<T> current = head; //elemento atual
-        boolean foundFirst = false; //para controlar se já encontramos o primeiro elemento
+        DoublyNode<T> current = head;
+        boolean foundFirst = false;
 
-        while (current != null) { //vai percorrendo os elementos
-            if (current.getElement().equals(element)) { //elemento atual = elemento q vai ser removido
-                if(foundFirst){ //se já encontrou o primeiro elemento, remove
-                    if (current.getPrev() != null) //existe o elemento anterior ao atual
-                        current.getPrev().setNext(current.getNext()); //elemento seguinte ao anterior do atual = elemento seguinte do atual
+        while (current != null) {
+            if (current.getElement().equals(element)) {
+                if (foundFirst) {
+                    // Remove o nó atual (duplicata)
+                    DoublyNode<T> toRemove = current;
+                    current = current.getNext(); // Avança ANTES de remover
 
-                    if (current.getNext() != null) //existe o elemento seguinte ao atual
-                        current.getNext().setPrev(current.getPrev()); //elemento anterior ao seguinte do atual = elemento anterior do atual
+                    // Ajusta os ponteiros dos nós vizinhos
+                    if (toRemove.getPrev() != null)
+                        toRemove.getPrev().setNext(toRemove.getNext());
+                    else
+                        head = toRemove.getNext();
 
-                    //depois de remover um elemento...
-                    DoublyNode<T> temp = current.getNext(); //temp = elemento seguinte do atual
-                    current.setNext(null); //elemento seguinte do atual = nulo
-                    current.setPrev(null); //elemento anterior do atual = nulo
-                    current = temp; //atual = elemento seguinte do atual
+                    if (toRemove.getNext() != null)
+                        toRemove.getNext().setPrev(toRemove.getPrev());
+                    else
+                        tail = toRemove.getPrev();
 
-                } else { //se NÃO já encontrou o primeiro elemento (primeira vez agora)
+                    // Atualiza contador
+                    size--;
+                } else {
                     foundFirst = true;
-                    current = current.getNext(); //atual = elemento seguinte do atual
+                    current = current.getNext();
                 }
-
-            } else //elemento atual != elemento q vai ser removido
-                current = current.getNext(); //atual = elemento seguinte do atual
+            } else
+                current = current.getNext();
         }
     }
 
