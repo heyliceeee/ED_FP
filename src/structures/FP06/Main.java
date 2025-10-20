@@ -273,8 +273,33 @@ public class Main {
         /**
          6. Desenhe uma fig da estrutura ADT {LL, CircularLL, DLL, CircularDLL} contendo os elems numéricos 20, 16, 27, 92. Atenção: N pode recorrer a nós sentinelas em nenhuma das estruturas.
          */
-
-
+        // R:
+        // LL
+        // [20] → [16] → [27] → [92] → null
+        // ↑
+        //head
+        //
+        // CircularLL
+        //     → [20] → [16] → [27] → [92]   ─┐
+        //    ↑                               │
+        //    └───────────────────────────────┘
+        //     ↑
+        //    head
+        //
+        // DLL
+        // null ← [20] ⇄ [16] ⇄ [27] ⇄ [92] → null
+        //         ↑                   ↑
+        //        head               tail
+        //
+        // CircularDLL
+        //     ┌→ [20] ⇄ [16] ⇄ [27] ⇄ [92]  ─┐
+        //     │                              │
+        //     └──────────────────────────────┘
+        //     ↑
+        //    head (20)
+        //    tail (92) → next aponta para head (20)
+        //    head (20) → prev aponta para tail (92)
+        
 
         /**
          7. Qual é a complexidade de tempo em notação Big O das operações de {travessia, inserção de um nó no início da list, inserção de um nó no fim da list} pra as definições ADT {LL, CircularLL, DLL}?
