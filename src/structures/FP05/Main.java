@@ -5,8 +5,7 @@ import structures.FP03.ArrayStack;
 import structures.FP03.LinkedStack;
 import structures.FP04.LinkedQueue;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -424,6 +423,135 @@ public class Main {
         /**
          5. A fórmula 1 é a prova de automobilismo + conhecida e c + prestígio a nível mundial. O campeonato mundial é constituído por diversas provas, equipas e corredores. Cd um dos corredores mediante a classificação em cd uma das provas irá obter pontos q irão formar a tabela classificativa e no final apurar o vencedor. Pretende-se q crie um programa q faça a simulação de uma pole position.
          */
+        System.out.println("=== 🏎️ SIMULAÇÃO POLE POSITION - FÓRMULA 1 ===\n");
 
+        // 1. Criar lista de pilotos participantes
+        System.out.println("1. 📋 LISTA DE PILOTOS INSCRITOS:");
+        DoubleLinkedUnorderedList<Piloto> listaPilotos = new DoubleLinkedUnorderedList<>();
+
+        // Adicionar pilotos (ordem de inscrição)
+        listaPilotos.addToRear(new Piloto("Max Verstappen", "Red Bull Racing", 1));
+        listaPilotos.addToRear(new Piloto("Lewis Hamilton", "Mercedes", 44));
+        listaPilotos.addToRear(new Piloto("Charles Leclerc", "Ferrari", 16));
+        listaPilotos.addToRear(new Piloto("Fernando Alonso", "Aston Martin", 14));
+        listaPilotos.addToRear(new Piloto("Lando Norris", "McLaren", 4));
+        listaPilotos.addToRear(new Piloto("Carlos Sainz", "Ferrari", 55));
+        listaPilotos.addToRear(new Piloto("George Russell", "Mercedes", 63));
+        listaPilotos.addToRear(new Piloto("Sergio Perez", "Red Bull Racing", 11));
+
+        System.out.println("Pilotos inscritos (" + listaPilotos.size() + "):");
+        int pos = 1;
+        for (Piloto piloto : listaPilotos) {
+            System.out.println("  " + pos + ". " + piloto);
+            pos++;
+        }
+
+        // 2. Simular tempos de qualificação
+        System.out.println("\n2. ⏱️  SIMULAÇÃO DE TEMPOS DE QUALIFICAÇÃO:");
+        DoubleLinkedUnorderedList<VoltaQualificacao> voltas = simularQualificacao(listaPilotos);
+
+        System.out.println("Melhores voltas de cada piloto:");
+        for (VoltaQualificacao volta : voltas) {
+            System.out.println("  " + volta);
+        }
+
+        // 3. Converter para array para ordenação
+        System.out.println("\n3. 🏁 ORDENAÇÃO PARA POLE POSITION:");
+        Object[] arrayVoltas = voltas.toArray();
+        VoltaQualificacao[] voltasArray = Arrays.copyOf(arrayVoltas, arrayVoltas.length, VoltaQualificacao[].class);
+
+        // Ordenar por tempo (menor tempo = melhor)
+        Arrays.sort(voltasArray);
+
+        System.out.println("Classificação final da Qualificação:");
+        for (int i = 0; i < voltasArray.length; i++) {
+            System.out.println("  P" + (i + 1) + " - " + voltasArray[i].getPiloto().getNome() +
+                    " - " + voltasArray[i].getTempoFormatado());
+        }
+
+        // 4. Anunciar Pole Position
+        System.out.println("\n4. 🏆 POLE POSITION!");
+        VoltaQualificacao pole = voltasArray[0];
+        System.out.println("🎉 " + pole.getPiloto().getNome().toUpperCase() +
+                " conquista a POLE POSITION!");
+        System.out.println("   Equipa: " + pole.getPiloto().getEquipa());
+        System.out.println("   Tempo: " + pole.getTempoFormatado());
+        System.out.println("   Número: " + pole.getPiloto().getNumero());
+
+        // 5. Grid de largada
+        System.out.println("\n5. 🚦 GRID DE LARGADA:");
+        System.out.println("Pos | Piloto               | Equipa           | Tempo");
+        System.out.println("----|----------------------|------------------|----------");
+        for (int i = 0; i < Math.min(10, voltasArray.length); i++) {
+            VoltaQualificacao volta = voltasArray[i];
+            Piloto piloto = volta.getPiloto();
+            System.out.printf("%-3d | %-20s | %-16s | %s\n",
+                    i + 1, piloto.getNome(), piloto.getEquipa(), volta.getTempoFormatado());
+        }
+
+        // 6. Estatísticas
+        System.out.println("\n6. 📊 ESTATÍSTICAS DA QUALIFICAÇÃO:");
+        calcularEstatisticas(voltasArray);
+    }
+
+    /**
+     * Simula os tempos de qualificação para todos os pilotos
+     */
+    private static DoubleLinkedUnorderedList<VoltaQualificacao> simularQualificacao(DoubleLinkedUnorderedList<Piloto> pilotos) {
+        DoubleLinkedUnorderedList<VoltaQualificacao> voltas = new DoubleLinkedUnorderedList<>();
+        Random random = new Random();
+
+        for (Piloto piloto : pilotos) {
+            // Simular 3 tentativas e ficar com a melhor
+            double melhorTempo = Double.MAX_VALUE;
+
+            for (int tentativa = 1; tentativa <= 3; tentativa++) {
+                // Tempo base + variação aleatória + skill do piloto
+                double tempoBase = 85.0; // 1:25.000
+                double variacao = (random.nextDouble() - 0.5) * 2.0; // ±1 segundo
+                double skill = (10 - piloto.getNumero() % 10) * 0.05; // pilotos com números menores = mais skill
+
+                double tempoVolta = tempoBase + variacao - skill;
+                melhorTempo = Math.min(melhorTempo, tempoVolta);
+            }
+
+            voltas.addToRear(new VoltaQualificacao(piloto, melhorTempo));
+        }
+
+        return voltas;
+    }
+
+    /**
+     * Calcula estatísticas da qualificação
+     */
+    private static void calcularEstatisticas(VoltaQualificacao[] voltas) {
+        if (voltas.length == 0) return;
+
+        double melhorTempo = voltas[0].getTempo();
+        double piorTempo = voltas[voltas.length - 1].getTempo();
+        double soma = 0;
+
+        for (VoltaQualificacao volta : voltas)
+            soma += volta.getTempo();
+
+        double media = soma / voltas.length;
+        double diferenca = piorTempo - melhorTempo;
+
+        System.out.printf("Melhor tempo: %s\n", voltas[0].getTempoFormatado());
+        System.out.printf("Pior tempo: %s\n", voltas[voltas.length - 1].getTempoFormatado());
+        System.out.printf("Tempo médio: %.3f segundos\n", media);
+        System.out.printf("Diferença pole/last: %.3f segundos\n", diferenca);
+        System.out.printf("Número de pilotos: %d\n", voltas.length);
+
+        // Análise por equipa
+        System.out.println("\n🏁 Análise por equipa:");
+        Map<String, Integer> polesPorEquipa = new HashMap<>();
+        for (int i = 0; i < Math.min(3, voltas.length); i++) {
+            String equipa = voltas[i].getPiloto().getEquipa();
+            polesPorEquipa.put(equipa, polesPorEquipa.getOrDefault(equipa, 0) + 1);
+        }
+
+        for (Map.Entry<String, Integer> entry : polesPorEquipa.entrySet())
+            System.out.printf("  %s: %d pilotos no top-3\n", entry.getKey(), entry.getValue());
     }
 }
