@@ -13,9 +13,12 @@ public class Main {
          # Parte I
          1. Implementa uma ArrayOrderedList. Lembre-se q terá de implementar a interface adequada.
          * Preste atenção aos slides da aula teórica principalmente o 15, e veja o diagrama de interfaces. Qts classes serão necessárias pra implementar o diagrama q lá está presente?
+         */
          // R:
          // 3 interfaces (ListADT, OrderedListADT, UnorderedListADT) + 1 classe de implementacao = 4 elems
-         *
+
+
+        /**
          * Outro problema mt importante c q se irá debater será na criação do iterador. Pra este exercício n considere as modificações concorrentes à ED subjacente.
          * Demonstre a utilização da ArrayOrderedList pra um cenário à sua escolha.
          */
@@ -277,15 +280,16 @@ public class Main {
          2. Dada a versatilidade de uma list pq q n é smp a escolhida em vez de uma Stack ou de uma Queue?
          */
         // R:
-        // **Cada estrutura comunica intenção diferente:**
-        //- **Stack**: "Só preciso do último" (LIFO)
-        //- **Queue**: "Processar por ordem de chegada" (FIFO)
-        //- **List**: "Preciso de acesso livre a todos"
-        //**List é canivete suíço - mais flexível mas:**
-        //- Menos segura (permite operações erradas)
-        //- Menos performance para casos específicos
-        //- Menos clara a intenção
-        //**Usa a ferramenta certa para o trabalho - restrições evitam erros.**
+        // Cd estrutura comunica intenção ≠:
+        //  - Stack: "Só preciso do último" (LIFO)
+        //  - Queue: "Processar por ordem de chegada" (FIFO)
+        //  - List: "Preciso de acesso livre a tds"
+
+        // List é canivete suíço - + flexível mas:
+        //  - - segura (permite operações erradas)
+        //  - - performance pra casos específicos
+        //  - - clara a intenção
+        // Usa a ferramenta certa pra o trabalho - restrições evitam erros.
 
 
         /**

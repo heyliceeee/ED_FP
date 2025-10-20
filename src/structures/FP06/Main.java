@@ -79,14 +79,34 @@ public class Main {
         /**
          2. Uma Queue pode ser armazenada em array usando 2 índices inteiros pra guardar a próxima posição livre na cauda e a posição do próximo elem a ser removido da cabeça. Explique o funcionamento das operações de {enqueue, dequeue, empty, first} de modo q n exista nenhum processo de shift dos elems.
          */
-
+        // R:
+        // Fila Circular - Sem Shifts:
+        //  - 2 índices: front (cabeça) e rear (cauda)
+        //  - Comportamento circular: qd chegam ao fim, voltam ao início
+        //  - enqueue: coloca em rear e avança circularmente
+        //  - dequeue: remove de front e avança circularmente
+        //  - first: olha pra front sem remover
+        //  - empty: verifica se front == rear (c controle de size)
+        // Resultado: Tds operações O(1) - sem mover elems, só mexemos nos índices! 🎯
 
 
         /**
          3. Descreva cm é q a {stack, queue} podem ser representadas c recurso a uma LL. Qual é a principal vantagem em relação à implementação em array?
          */
-
-
+        // R:
+        // Stack c LL:
+        //  - Topo = head da list
+        //  - push = addToFront (O(1))
+        //  - pop = removeFirst (O(1))
+        //
+        // Queue c LinkedList:
+        //  - Frente = head, Cauda = tail
+        //  - enqueue = addToRear (O(1))
+        //  - dequeue = removeFirst (O(1))
+        //
+        // Principal vantagem vs array:
+        //  - CRESCIMENTO DINÂMICO - sem tam fixo, sem redimensionamentos custosos 🚀
+        
 
         /**
          4. Crie uma implementação de List através de uma CircularLL, podendo recorrer à herança caso seja aplicável, q funcione de forma circular, ou seja, o último elem da list deverá apontar pra a cabeça e n pra null.
