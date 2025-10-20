@@ -216,7 +216,51 @@ public class Main {
         /**
          5. Implementa e testa uma DoubleLinkedUnorderedList.
          */
+        System.out.println("=== TESTE DA DOUBLELINKEDUNORDEREDLIST ===\n");
 
+        DoubleLinkedUnorderedList<String> lista1 = new DoubleLinkedUnorderedList<>();
+
+        // Testar addToFront e addToRear
+        lista1.addToFront("B");
+        lista1.addToFront("A");
+        lista1.addToRear("D");
+
+        System.out.println("Após addToFront/Rear: " + lista1);
+
+        // Testar addAfter
+        lista1.addAfter("C", "B");
+        System.out.println("Após addAfter: " + lista1);
+
+        // Testar métodos de consulta
+        System.out.println("Primeiro: " + lista1.first());
+        System.out.println("Último: " + lista1.last());
+        System.out.println("Tamanho: " + lista1.size());
+        System.out.println("Contém 'C'? " + lista1.contains("C"));
+        System.out.println("Está vazia? " + lista1.isEmpty());
+
+        // Testar iterador
+        System.out.println("Elementos via iterador:");
+        for (String elem : lista1)
+            System.out.println(" - " + elem);
+
+        // Testar remoções
+        lista1.removeFirst();
+        System.out.println("Após removeFirst: " + lista1);
+
+        lista1.remove("C");
+        System.out.println("Após remove 'C': " + lista1);
+
+        lista1.removeLast();
+        System.out.println("Após removeLast: " + lista1);
+
+        // Testar cenário de erro
+        try {
+            lista1.addAfter("X", "Inexistente");
+        } catch (ElementNotFoundException e) {
+            System.out.println("✅ Erro esperado: " + e.getMessage());
+        }
+
+        System.out.println("Lista final: " + lista1);
 
 
         /**
