@@ -267,13 +267,22 @@ public class Main {
          # Parte II
          1. Pq q n existe uma método add(Element) na interface ListADT?
          */
-
+        // R: Cd interface tem os métodos q fazem sentido pra o seu tp de list.
 
 
         /**
          2. Dada a versatilidade de uma list pq q n é smp a escolhida em vez de uma Stack ou de uma Queue?
          */
-
+        // R:
+        // **Cada estrutura comunica intenção diferente:**
+        //- **Stack**: "Só preciso do último" (LIFO)
+        //- **Queue**: "Processar por ordem de chegada" (FIFO)
+        //- **List**: "Preciso de acesso livre a todos"
+        //**List é canivete suíço - mais flexível mas:**
+        //- Menos segura (permite operações erradas)
+        //- Menos performance para casos específicos
+        //- Menos clara a intenção
+        //**Usa a ferramenta certa para o trabalho - restrições evitam erros.**
 
 
         /**
