@@ -4,7 +4,7 @@ import exceptions.EmptyCollectionException;
 
 public class DoublyLinkedList<T> {
     protected DoublyNode<T> head, tail;
-    protected int size;
+    public int size;
 
 
     public DoublyLinkedList() {
@@ -356,5 +356,17 @@ public class DoublyLinkedList<T> {
 
         sb.append("null");
         return sb.toString();
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public DoublyNode<T> getHead() {
+        return head;
+    }
+
+    public DoublyNode<T> getTail() {
+        return tail;
     }
 }

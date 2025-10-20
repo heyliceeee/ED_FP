@@ -106,18 +106,168 @@ public class Main {
         //
         // Principal vantagem vs array:
         //  - CRESCIMENTO DINÂMICO - sem tam fixo, sem redimensionamentos custosos 🚀
-        
+
 
         /**
          4. Crie uma implementação de List através de uma CircularLL, podendo recorrer à herança caso seja aplicável, q funcione de forma circular, ou seja, o último elem da list deverá apontar pra a cabeça e n pra null.
          */
+        System.out.println("=== 🔄 DEMONSTRAÇÃO CIRCULAR LINKED LIST ===\n");
 
+        CircularLinkedList<String> circularList = new CircularLinkedList<>();
+
+        // 1. Adicionar elementos
+        System.out.println("1. ADIÇÃO DE ELEMENTOS:");
+        circularList.addFirst("C");
+        circularList.addFirst("B");
+        circularList.addFirst("A");
+        circularList.addToRear("D");
+        circularList.addToRear("E");
+
+        System.out.println("Lista: " + circularList);
+        System.out.println("É circular? " + circularList.isCircular());
+        System.out.println("Tamanho: " + circularList.getSize());
+
+        // 2. Percursos circulares
+        System.out.println("\n2. PERCURSOS CIRCULARES:");
+        circularList.traverseFrom("A");
+        circularList.traverseFrom("C");
+        circularList.traverseFrom("E");
+
+        // 3. Remoções
+        System.out.println("\n3. REMOÇÕES:");
+        System.out.println("Remove primeiro: " + circularList.removeFirst());
+        System.out.println("Lista: " + circularList);
+
+        System.out.println("Remove último: " + circularList.removeLast());
+        System.out.println("Lista: " + circularList);
+        System.out.println("É circular? " + circularList.isCircular());
+
+        // 4. Casos especiais
+        System.out.println("\n4. CASOS ESPECIAIS:");
+
+        // Lista com um elemento
+        CircularLinkedList<String> umElemento1 = new CircularLinkedList<>();
+        umElemento1.addFirst("Único");
+        System.out.println("Um elemento: " + umElemento1);
+        System.out.println("É circular? " + umElemento1.isCircular());
+
+        // Lista vazia
+        CircularLinkedList<String> vazia1 = new CircularLinkedList<>();
+        System.out.println("Lista vazia: " + vazia1);
+        System.out.println("É circular? " + vazia1.isCircular());
+
+        // 5. Cenário prático - Jogo de Roda
+        System.out.println("\n5. CENÁRIO PRÁTICO - JOGO DA RODA:");
+        CircularLinkedList<String> roda = new CircularLinkedList<>();
+        roda.addToRear("João");
+        roda.addToRear("Maria");
+        roda.addToRear("Pedro");
+        roda.addToRear("Ana");
+
+        System.out.println("Jogadores na roda: " + roda);
+        roda.traverseFrom("Maria");
+
+        // Simular rodada
+        System.out.println("Maria é eliminada!");
+        // (Implementar lógica de remoção específica)
+        System.out.println("Roda atualizada: " + roda);
 
 
         /**
          5. Crie uma implementação de List através de uma CircularDLL, podendo recorrer a herança caso seja aplicável, q funcione de forma circular, ou seja, a referência seguinte da cauda da list deverá referenciar a cabeça e n null, assim cm o elem anterior à cabeça deverá referenciar a cauda da list em vez de null.
          */
+        System.out.println("=== 🔄 DEMONSTRAÇÃO CIRCULAR DOUBLY LINKED LIST ===\n");
 
+        CircularDoublyLinkedList<String> circularList1 = new CircularDoublyLinkedList<>();
+
+        // 1. Construção da lista circular
+        System.out.println("1. CONSTRUÇÃO DA LISTA CIRCULAR:");
+        circularList1.addFirst("C");
+        circularList1.addFirst("B");
+        circularList1.addFirst("A");
+        circularList1.addToRear("D");
+        circularList1.addToRear("E");
+
+        System.out.println("Lista: " + circularList1);
+        System.out.println("Circularidade correta? " + circularList1.isProperlyCircular());
+        System.out.println("Tamanho: " + circularList1.getSize());
+
+        // 2. Percursos bidirecionais
+        System.out.println("\n2. PERCURSOS BIDIRECIONAIS:");
+        circularList1.traverseForward("A");
+        circularList1.traverseBackward("A");
+
+        circularList1.traverseForward("C");
+        circularList1.traverseBackward("C");
+
+        circularList1.traverseForward("E");
+        circularList1.traverseBackward("E");
+
+        // 3. Operações de rotação
+        System.out.println("\n3. ROTAÇÕES:");
+        System.out.println("Antes: " + circularList1);
+
+        circularList1.rotateForward();
+        System.out.println("Rotate forward: " + circularList1);
+
+        circularList1.rotateForward();
+        System.out.println("Rotate forward: " + circularList1);
+
+        circularList1.rotateBackward();
+        System.out.println("Rotate backward: " + circularList1);
+
+        // 4. Remoções mantendo circularidade
+        System.out.println("\n4. REMOÇÕES:");
+        System.out.println("Remove primeiro: " + circularList1.removeFirst());
+        System.out.println("Lista: " + circularList1);
+        System.out.println("Circularidade mantida? " + circularList1.isProperlyCircular());
+
+        System.out.println("Remove último: " + circularList1.removeLast());
+        System.out.println("Lista: " + circularList1);
+
+        System.out.println("Remove 'C': " + circularList1.remove("C"));
+        System.out.println("Lista: " + circularList1);
+
+        // 5. Casos especiais
+        System.out.println("\n5. CASOS ESPECIAIS:");
+
+        // Um elemento
+        CircularDoublyLinkedList<String> umElemento2 = new CircularDoublyLinkedList<>();
+        umElemento2.addFirst("Solitário");
+        System.out.println("Um elemento: " + umElemento2);
+        System.out.println("Circularidade? " + umElemento2.isProperlyCircular());
+        umElemento2.traverseForward("Solitário");
+        umElemento2.traverseBackward("Solitário");
+
+        // Vazia
+        CircularDoublyLinkedList<String> vazia2 = new CircularDoublyLinkedList<>();
+        System.out.println("Vazia: " + vazia2);
+        System.out.println("Circularidade? " + vazia2.isProperlyCircular());
+
+        // 6. Cenário prático - Música em Loop
+        System.out.println("\n6. CENÁRIO PRÁTICO - PLAYLIST CIRCULAR:");
+        CircularDoublyLinkedList<String> playlist = new CircularDoublyLinkedList<>();
+        playlist.addToRear("Música 1 - Rock");
+        playlist.addToRear("Música 2 - Jazz");
+        playlist.addToRear("Música 3 - Pop");
+        playlist.addToRear("Música 4 - Clássica");
+
+        System.out.println("Playlist: " + playlist);
+
+        // Simular reprodução
+        System.out.println("\nReprodução em loop:");
+        playlist.traverseForward("Música 1 - Rock");
+
+        System.out.println("\nPular músicas (rotate):");
+        playlist.rotateForward();
+        System.out.println("Agora tocando: " + playlist.getHead());
+
+        playlist.rotateForward();
+        System.out.println("Agora tocando: " + playlist.getHead());
+
+        // Voltar música
+        playlist.rotateBackward();
+        System.out.println("Voltou para: " + playlist.getHead());
 
 
         /**
