@@ -4,14 +4,17 @@ import exceptions.EmptyCollectionException;
 import interfaces.OrderedListADT;
 import structures.FP02.DoublyLinkedList;
 import structures.FP02.DoublyNode;
+import structures.FP03.ArrayStack;
+import structures.FP03.LinkedStack;
+import structures.FP04.LinkedQueue;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-public class DoublyLinkedOrderedList<T extends Comparable<T>> extends DoublyLinkedList<T> implements OrderedListADT<T> {
+public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLinkedList<T> implements OrderedListADT<T> {
     private int modCount;
 
-    public DoublyLinkedOrderedList() {
+    public DoubleLinkedOrderedList() {
         super();
         this.modCount = 0;
     }
@@ -223,6 +226,88 @@ public class DoublyLinkedOrderedList<T extends Comparable<T>> extends DoublyLink
 
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * Inverte a lista ordenada e devolve os elementos num LinkedStack (LIFO)
+     * Stack é ideal porque naturalmente inverte a ordem - último elemento adicionado é o primeiro a ser removido
+     *
+     * @return LinkedStack com os elementos em ordem inversa
+     */
+    public LinkedStack<T> reverseToStack() {
+        LinkedStack<T> stack = new LinkedStack<>();
+
+        // Percorre a lista e empilha os elementos (resulta em ordem inversa)
+        DoublyNode<T> current = head;
+        while (current != null) {
+            stack.push(current.getElement());
+            current = current.getNext();
+        }
+
+        return stack;
+    }
+
+
+    /**
+     * Inverte a lista ordenada e devolve os elementos num ArrayStack (LIFO)
+     * Alternativa usando array-based stack
+     *
+     * @return ArrayStack com os elementos em ordem inversa
+     */
+    public ArrayStack<T> reverseToArrayStack() {
+        ArrayStack<T> stack = new ArrayStack<>();
+
+        DoublyNode<T> current = head;
+        while (current != null) {
+            stack.push(current.getElement());
+            current = current.getNext();
+        }
+
+        return stack;
+    }
+
+    /**
+     * Inverte a lista ordenada e devolve os elementos numa LinkedQueue (FIFO) mas em ordem inversa à original
+     *
+     * @return LinkedQueue com os elementos em ordem inversa
+     */
+    public LinkedQueue<T> reverseToQueue() {
+        LinkedQueue<T> queue = new LinkedQueue<>();
+
+        // Percorre do fim para o início para manter ordem inversa na queue
+        DoublyNode<T> current = tail;
+        while (current != null) {
+            queue.enqueue(current.getElement());
+            current = current.getPrev();
+        }
+
+        return queue;
+    }
+
+    /**
+     * Inverte a própria lista (modifica a instância atual)
+     * Algoritmo in-place que troca os elementos dos nós
+     */
+    public void reverseInPlace() {
+        if (isEmpty() || size == 1)
+            return; // Não precisa inverter
+
+        DoublyNode<T> current = head;
+        DoublyNode<T> temp = null;
+
+        // Troca head e tail
+        head = tail;
+        tail = current;
+
+        // Inverte os ponteiros de todos os nós
+        while (current != null) {
+            temp = current.getPrev();
+            current.setPrev(current.getNext());
+            current.setNext(temp);
+            current = current.getPrev(); // Move para o próximo (antigo anterior)
+        }
+
+        modCount++;
     }
 
     private class MyIterator implements Iterator<T> {

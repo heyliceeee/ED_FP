@@ -1,7 +1,11 @@
 package structures.FP05;
 
 import exceptions.ElementNotFoundException;
+import structures.FP03.ArrayStack;
+import structures.FP03.LinkedStack;
+import structures.FP04.LinkedQueue;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Main {
@@ -98,7 +102,7 @@ public class Main {
         /**
          2. Implementa uma DoubleLinkedOrderedList. Demonstre a utilização da DoubleLinkedOrderedList pra um cenário à sua escolha.
          */
-        DoublyLinkedOrderedList<Integer> lista = new DoublyLinkedOrderedList<>();
+        DoubleLinkedOrderedList<Integer> lista = new DoubleLinkedOrderedList<>();
 
         // ✅ Funciona - usa o método add() específico da lista ordenada
         lista.add(5);
@@ -288,13 +292,133 @@ public class Main {
         /**
          3. Cria um método na DoubleLinkedOrderedList q inverta e devolva tds os elems no tp de dados abstrato q entender.
          */
+        System.out.println("=== DEMONSTRAÇÃO DE INVERSÃO COM LINKEDSTACK ===\n");
 
+        DoubleLinkedOrderedList<Integer> listaOrdenada = new DoubleLinkedOrderedList<>();
+
+        // Adicionar elementos ordenados
+        listaOrdenada.add(10);
+        listaOrdenada.add(20);
+        listaOrdenada.add(30);
+        listaOrdenada.add(40);
+
+        System.out.println("Lista original (ordenada): " + listaOrdenada);
+
+        // 1. Inverter para LinkedStack (LIFO)
+        System.out.println("\n1. INVERSÃO PARA LINKEDSTACK:");
+        LinkedStack<Integer> linkedStack = listaOrdenada.reverseToStack();
+        System.out.println("LinkedStack: " + linkedStack);
+        System.out.println("Pop: " + linkedStack.pop() + " → " + linkedStack.pop());
+        System.out.println("Stack após pops: " + linkedStack);
+
+        // 2. Inverter para ArrayStack
+        System.out.println("\n2. INVERSÃO PARA ARRAYSTACK:");
+        ArrayStack<Integer> arrayStack = listaOrdenada.reverseToArrayStack();
+        System.out.println("ArrayStack: " + arrayStack);
+        System.out.println("Top: " + arrayStack.peek());
+
+        // 3. Inverter para Queue
+        System.out.println("\n3. INVERSÃO PARA QUEUE:");
+        LinkedQueue<Integer> queue = listaOrdenada.reverseToQueue();
+        System.out.println("LinkedQueue (ordem inversa): " + queue);
+        System.out.println("Dequeue: " + queue.dequeue() + " → " + queue.dequeue());
+
+        // 4. Inversão in-place
+        System.out.println("\n4. INVERSÃO IN-PLACE:");
+        System.out.println("Antes: " + listaOrdenada);
+        listaOrdenada.reverseInPlace();
+        System.out.println("Depois: " + listaOrdenada);
+
+        // 5. Teste com lista vazia e um elemento
+        System.out.println("\n5. CASOS ESPECIAIS:");
+        DoubleLinkedOrderedList<String> listaVazia = new DoubleLinkedOrderedList<>();
+        DoubleLinkedOrderedList<String> listaUmElemento = new DoubleLinkedOrderedList<>();
+        listaUmElemento.add("Único");
+
+        System.out.println("Lista vazia: " + listaVazia.reverseToStack().isEmpty());
+        System.out.println("Lista com um elemento: " + listaUmElemento.reverseToStack());
 
 
         /**
          4. Suponha q apenas tem uma DoubleLinkedUnorderedList e q pretende desenvolver um programa q precisa obrigatoriamente de um simples array pra operar. Demonstre este simples cenário.
          */
+        System.out.println("=== SISTEMA DE PROCESSAMENTO DE IMAGENS ===\n");
 
+        // 1. Dados originais em DoubleLinkedUnorderedList (flexível para adições)
+        System.out.println("1. DADOS ORIGINAIS NA LISTA:");
+        DoubleLinkedUnorderedList<Integer> listaPixels = new DoubleLinkedUnorderedList<>();
+
+        // Simular valores de pixels RGB
+        listaPixels.addToFront(255);  // Pixel 1 - Vermelho
+        listaPixels.addToRear(128);   // Pixel 2 - Verde
+        listaPixels.addToRear(64);    // Pixel 3 - Azul
+        listaPixels.addAfter(200, 255); // Pixel adicional
+        listaPixels.addToRear(100);   // Pixel final
+
+        System.out.println("Pixels na lista: " + listaPixels);
+        System.out.println("Total de pixels: " + listaPixels.size());
+
+        // 2. CONVERSÃO PARA ARRAY (obrigatório para certas operações)
+        System.out.println("\n2. CONVERSÃO PARA ARRAY SIMPLES:");
+        Object[] arrayPixels = listaPixels.toArray();
+
+        System.out.println("Array criado: " + java.util.Arrays.toString(arrayPixels));
+        System.out.println("Tipo do array: " + arrayPixels.getClass().getSimpleName());
+        System.out.println("Tamanho do array: " + arrayPixels.length);
+
+        // 3. OPERAÇÕES QUE EXIGEM ARRAY
+        System.out.println("\n3. OPERAÇÕES EXCLUSIVAS DE ARRAY:");
+
+        // A. Acesso aleatório por índice (O(1))
+        System.out.println("A. ACESSO ALEATÓRIO:");
+        System.out.println("Pixel na posição 2: " + arrayPixels[2]);
+        System.out.println("Pixel na posição 0: " + arrayPixels[0]);
+
+        // B. Ordenação nativa com Arrays.sort()
+        System.out.println("\nB. ORDENAÇÃO NATIVA:");
+        Integer[] pixelsOrdenados = Arrays.copyOf(arrayPixels, arrayPixels.length, Integer[].class);
+        Arrays.sort(pixelsOrdenados);
+        System.out.println("Pixels ordenados: " + Arrays.toString(pixelsOrdenados));
+
+        // C. Busca binária (requer array ordenado)
+        System.out.println("\nC. BUSCA BINÁRIA:");
+        int posicao = Arrays.binarySearch(pixelsOrdenados, 128);
+        System.out.println("Valor 128 encontrado na posição: " + posicao);
+
+        // D. Processamento em lote com for-loop otimizado
+        System.out.println("\nD. PROCESSAMENTO EM LOTE:");
+        int soma = 0;
+        for (int i = 0; i < arrayPixels.length; i++) {
+            soma += (Integer) arrayPixels[i];
+            System.out.println("Processando pixel " + i + ": " + arrayPixels[i]);
+        }
+        System.out.println("Soma total dos pixels: " + soma);
+
+        // E. Operações matemáticas com arrays
+        System.out.println("\nE. OPERAÇÕES MATEMÁTICAS:");
+        double media = (double) soma / arrayPixels.length;
+        System.out.println("Média dos pixels: " + media);
+
+        // 4. CONVERSÃO DE VOLTA PARA LISTA (se necessário)
+        System.out.println("\n4. CONVERSÃO DE VOLTA PARA LISTA:");
+        DoubleLinkedUnorderedList<Integer> listaProcessada = new DoubleLinkedUnorderedList<>();
+        for (Object pixel : arrayPixels)
+            listaProcessada.addToRear((Integer) pixel);
+        System.out.println("Lista reconstruída: " + listaProcessada);
+
+        // 5. VANTAGENS COMPARATIVAS
+        System.out.println("\n5. VANTAGENS DE CADA ESTRUTURA:");
+        System.out.println("DoubleLinkedUnorderedList:");
+        System.out.println("  ✅ Inserções O(1) no início/fim");
+        System.out.println("  ✅ Flexível para modificações");
+        System.out.println("  ❌ Acesso O(n) por posição");
+
+        System.out.println("Array Simples:");
+        System.out.println("  ✅ Acesso O(1) por índice");
+        System.out.println("  ✅ Ordenação/busca nativa");
+        System.out.println("  ✅ Cache-friendly");
+        System.out.println("  ❌ Tamanho fixo");
+        System.out.println("  ❌ Inserções O(n)");
 
 
         /**
