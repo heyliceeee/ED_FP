@@ -1,5 +1,7 @@
 package structures.FP05;
 
+import exceptions.ElementNotFoundException;
+
 import java.util.Iterator;
 
 public class Main {
@@ -120,13 +122,95 @@ public class Main {
         /**
          3. Os cenários usados nos exercícios anteriores (1 e 2) foram adds elems n comparáveis? Oq aconteceu?
          */
-
+        // R:
+        // N foram adds elems n comparáveis. Tds as classes (Paciente, Livro, Tarefa) implementavam Comparable. Por isso, n houve erros e td funcionou corretamente
 
 
         /**
-         4. Define a interface UnorderedListADT e implementar uma ArrayUnorderedList. Demonstre a utilização da ArrayUnorderedList pra um cenário à sua escolha.
+         4. Define a interface UnorderedListADT e implementa uma ArrayUnorderedList. Demonstre a utilização da ArrayUnorderedList pra um cenário à sua escolha.
          */
+        System.out.println("=== SISTEMA DE HISTÓRICO DE NAVEGAÇÃO WEB ===\n");
 
+        // Criar histórico de navegação
+        ArrayUnorderedList<String> historico = new ArrayUnorderedList<>();
+
+        // 1. Navegação inicial - páginas visitadas
+        System.out.println("1. NAVEGAÇÃO INICIAL:");
+        historico.addToRear("https://www.google.com");
+        historico.addToRear("https://www.github.com");
+        historico.addToRear("https://stackoverflow.com");
+
+        System.out.println("Histórico após navegação inicial:");
+        System.out.println(historico);
+        System.out.println("Total de páginas: " + historico.size());
+
+        // 2. Acesso rápido a página inicial
+        System.out.println("\n2. ACESSO RÁPIDO À PÁGINA INICIAL:");
+        historico.addToFront("https://www.meusite.com");
+        System.out.println("Histórico após adicionar página inicial:");
+        System.out.println(historico);
+
+        // 3. Navegação após pesquisa específica
+        System.out.println("\n3. NAVEGAÇÃO APÓS PESQUISA:");
+        try {
+            historico.addAfter("https://docs.oracle.com/javase", "https://www.google.com");
+            System.out.println("Adicionada documentação Java após Google");
+            System.out.println("Histórico atual: " + historico);
+        } catch (ElementNotFoundException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+
+        // 4. Consulta do histórico
+        System.out.println("\n4. CONSULTA DO HISTÓRICO:");
+        System.out.println("Primeira página visitada: " + historico.first());
+        System.out.println("Última página visitada: " + historico.last());
+        System.out.println("Contém GitHub? " + historico.contains("https://www.github.com"));
+
+        // 5. Navegação para trás (remover última página)
+        System.out.println("\n5. NAVEGAÇÃO PARA TRÁS:");
+        String ultima = historico.removeLast();
+        System.out.println("Página removida (back): " + ultima);
+        System.out.println("Histórico após back: " + historico);
+
+        // 6. Voltar ao início (remover primeira página)
+        System.out.println("\n6. VOLTAR AO INÍCIO:");
+        String primeira = historico.removeFirst();
+        System.out.println("Página removida (home): " + primeira);
+        System.out.println("Histórico atual: " + historico);
+
+        // 7. Remoção de página específica
+        System.out.println("\n7. REMOÇÃO DE PÁGINA ESPECÍFICA:");
+        try {
+            String removida = historico.remove("https://www.github.com");
+            System.out.println("Página removida: " + removida);
+            System.out.println("Histórico final: " + historico);
+        } catch (ElementNotFoundException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+
+        // 8. Iteração pelo histórico
+        System.out.println("\n8. ITERAÇÃO PELO HISTÓRICO:");
+        System.out.println("Páginas no histórico:");
+        for (String pagina : historico) {
+            System.out.println(" - " + pagina);
+        }
+
+        // 9. Cenário de erro - elemento não encontrado
+        System.out.println("\n9. CENÁRIO DE ERRO:");
+        try {
+            historico.addAfter("https://www.invalida.com", "https://www.inexistente.com");
+        } catch (ElementNotFoundException e) {
+            System.out.println("❌ Erro esperado: " + e.getMessage());
+        }
+
+        // 10. Histórico vazio
+        System.out.println("\n10. LIMPAR HISTÓRICO:");
+
+        while (!historico.isEmpty())
+            historico.removeFirst(); // Remove todos os elementos
+
+        System.out.println("Histórico vazio? " + historico.isEmpty());
+        System.out.println("Total de páginas: " + historico.size());
 
 
         /**
