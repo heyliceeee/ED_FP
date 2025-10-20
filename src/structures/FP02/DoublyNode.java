@@ -11,7 +11,7 @@ public class DoublyNode<T> {
         this.next = null;
     }
 
-    DoublyNode(T elem) {
+    public DoublyNode(T elem) {
         this.elem = elem;
         this.prev = null;
         this.next = null;

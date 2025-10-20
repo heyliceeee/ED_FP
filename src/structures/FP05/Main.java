@@ -96,7 +96,25 @@ public class Main {
         /**
          2. Implementa uma DoubleLinkedOrderedList. Demonstre a utilização da DoubleLinkedOrderedList pra um cenário à sua escolha.
          */
+        DoublyLinkedOrderedList<Integer> lista = new DoublyLinkedOrderedList<>();
 
+        // ✅ Funciona - usa o método add() específico da lista ordenada
+        lista.add(5);
+        lista.add(2);
+        lista.add(8);
+        lista.add(1);
+
+        System.out.println(lista); // [1 -> 2 -> 5 -> 8] - ordenado!
+
+        // ✅ Funciona - métodos herdados
+        System.out.println("Primeiro: " + lista.first()); // 1
+        System.out.println("Último: " + lista.last());    // 8
+
+        // ✅ Funciona - remoções
+        lista.removeFirst(); // Remove 1
+        lista.remove(5);     // Remove 5
+
+        System.out.println(lista); // [2 -> 8]
 
 
         /**

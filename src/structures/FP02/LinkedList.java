@@ -102,16 +102,20 @@ public class LinkedList<T> {
     /**
      * Remove o primeiro elemento da lista (head).
      */
-    public void removeFirst() throws EmptyCollectionException {
+    public T removeFirst() throws EmptyCollectionException {
         if (head == null || size == 0) // lista vazia
-            throw new EmptyCollectionException("List");
+            throw new EmptyCollectionException("Linked List");
+
+        T removedElem = head.getElement(); //guarda o elemento do primeiro no antes de remover
 
         head = head.getNext(); // avança a cabeça para o próximo nó
-        size--;
+        this.size--;
 
         // se a lista ficou vazia, tail também deve ser null
         if (head == null)
             tail = null;
+
+        return removedElem;
     }
 
     /**
@@ -129,26 +133,32 @@ public class LinkedList<T> {
     /**
      * Remove o último elemento da lista (tail).
      */
-    public void removeLast() throws EmptyCollectionException {
+    public T removeLast() throws EmptyCollectionException {
         if (head == null || size == 0) // lista vazia
-            throw new EmptyCollectionException("List");
+            throw new EmptyCollectionException("Linked List");
+
+        T removedElem;
 
         if (head == tail) { // só existe um elemento
+            removedElem = head.getElement();
             head = null;
             tail = null;
-            size = 0;
-            return;
+        } else {
+            LinkedListNode<T> current = head;
+
+            while (current.getNext() != tail) // percorre ate ao penultimo no
+                current = current.getNext();
+
+            removedElem = tail.getElement(); // guarda o elemento do ultimo no antes de remover
+
+            // corta a referencia para o ultimo no
+            current.setNext(null);
+            tail = current; // atualiza a cauda
         }
 
+        this.size--;
 
-        LinkedListNode<T> current = head;
-        while (current.getNext() != tail) // percorre até ao penúltimo nó
-            current = current.getNext();
-
-        // "corta" a referência para o último nó
-        current.setNext(null);
-        tail = current; // atualiza a cauda
-        size--;
+        return removedElem;
     }
 
     /**

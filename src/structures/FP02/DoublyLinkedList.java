@@ -38,7 +38,7 @@ public class DoublyLinkedList<T> {
      * remover node da head
      *
      */
-    public void removeFirst() throws EmptyCollectionException {
+    public T removeFirst() throws EmptyCollectionException {
         if (head == null || size == 0) //lista vazia
             throw new EmptyCollectionException("List");
 
@@ -53,13 +53,15 @@ public class DoublyLinkedList<T> {
             head.setPrev(null); //o elemento anterior ao head não existe
             size--;
         }
+
+        return removedNode.getElement();
     }
 
     /**
      * remover node da tail
      *
      */
-    public void removeLast() throws EmptyCollectionException {
+    public T removeLast() throws EmptyCollectionException {
         if (tail == null || size == 0) //lista vazia
             throw new EmptyCollectionException("List");
 
@@ -74,6 +76,8 @@ public class DoublyLinkedList<T> {
             tail.setNext(null); //o elemento seguinte ao tail não existe
             size--;
         }
+
+        return removedNode.getElement();
     }
 
     /**

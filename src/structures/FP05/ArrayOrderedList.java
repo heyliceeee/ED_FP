@@ -91,7 +91,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
         this.size--; // reduz o tamanho da lista
         this.modCount++; // incrementa apos modificacao bem sucedida
 
-        return result; // retorna o elemento que foi removido
+        return result;
     }
 
     /**
@@ -113,7 +113,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
         this.size--; //reduz o tamanho da lista
         this.modCount++; // incrementa apos modificacao bem sucedida
 
-        return result; // retorna o elemento que foi removido
+        return result;
     }
 
     /**
