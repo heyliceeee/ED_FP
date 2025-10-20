@@ -336,5 +336,22 @@ public class Main {
          *      <h1> Titulo </h1>
          *      <p> Corpo com <a>link</a></p>
          */
+        XHTMLValidator validator = new XHTMLValidator();
+        validator.demonstrateValidation();
+
+        // Testes adicionais
+        System.out.println("=== 🧪 TESTES ADICIONAIS ===\n");
+
+        // Teste com os exemplos do enunciado
+        System.out.println("EXEMPLOS DO ENUNCIADO:");
+
+        String exemploValido = "<body> <h1> Titulo </h1> <p> Corpo com <a> link </a> </p> </body>";
+        System.out.println("Válido (esperado: true): " + validator.validate(exemploValido));
+
+        String exemploInvalido1 = "<body> <h1> Titulo </h1> <p> Corpo com <a> link </p> </a> </body>";
+        System.out.println("Inválido 1 (esperado: false): " + validator.validate(exemploInvalido1));
+
+        String exemploInvalido2 = "<body> <h1> Titulo </h1> <p> Corpo com <a> link </a> </p>";
+        System.out.println("Inválido 2 (esperado: false): " + validator.validate(exemploInvalido2));
     }
 }
