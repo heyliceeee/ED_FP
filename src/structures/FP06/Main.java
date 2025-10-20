@@ -299,12 +299,22 @@ public class Main {
         //    head (20)
         //    tail (92) → next aponta para head (20)
         //    head (20) → prev aponta para tail (92)
-        
+
 
         /**
          7. Qual é a complexidade de tempo em notação Big O das operações de {travessia, inserção de um nó no início da list, inserção de um nó no fim da list} pra as definições ADT {LL, CircularLL, DLL}?
          */
-
+        // R:
+        // Travessia: Tds O(n) - têm de percorrer tds os elems
+        //
+        // Inserção no início: Tds O(1) - só mexem no head
+        //
+        // Inserção no fim:
+        //  - LL: O(n) - tem de percorrer até ao último
+        //  - CircularLL: O(1) - c tail
+        //  - DLL: O(1) - c tail
+        //
+        // DLL é a + equilibrada - td O(1) exceto travessia 🚀
 
 
         /**
