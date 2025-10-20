@@ -1,12 +1,79 @@
 package structures.FP06;
 
+import exceptions.EmptyCollectionException;
+import interfaces.SmackStackADT;
+
 public class Main {
     public static void main(String[] args) {
         /**
          # Parte I
-         1. Defina e implemente a ED SmackStackADT recorrendo a uma das suas implementações de stack em array. A ED SmackStackADT tem o mm funcionamento de uma stack normal, no entanto possui + um comportamento Smack q elimina e devolve o último elem da stack. Atenção: Deverá recorrer a herança pra definir e implementar esta nova estrutura.
+         1. Defina e implemente a ED SmackStackADT recorrendo a uma das suas implementações de ArrayStack. A ED SmackStackADT tem o mm funcionamento de uma stack normal, no entanto possui + um comportamento Smack q elimina e devolve o último elem da stack. Atenção: Deverá recorrer a herança pra definir e implementar esta nova estrutura.
          */
+        System.out.println("=== 🎯 DEMONSTRAÇÃO SMACKSTACK ===\n");
 
+        // 1. Teste com ArraySmackStack
+        System.out.println("1. ARRAY SMACK STACK:");
+        SmackStackADT<String> arraySmack = new ArraySmackStack<>();
+
+        // Push elementos
+        arraySmack.push("Primeiro");
+        arraySmack.push("Segundo");
+        arraySmack.push("Terceiro");
+        arraySmack.push("Quarto");
+
+        System.out.println("Stack inicial: " + arraySmack);
+        System.out.println("Topo: " + arraySmack.peek());
+
+        // Operação Smack - remove do fundo
+        System.out.println("\nOperação SMACK:");
+        String smacked = arraySmack.smack();
+        System.out.println("Elemento smacked: " + smacked);
+        System.out.println("Stack após smack: " + arraySmack);
+
+        // Mais operações
+        System.out.println("\nMais operações:");
+        arraySmack.pop();
+        System.out.println("Após pop: " + arraySmack);
+
+        arraySmack.smack();
+        System.out.println("Após outro smack: " + arraySmack);
+
+        // 3. Casos especiais
+        System.out.println("\n3. CASOS ESPECIAIS:");
+
+        // Stack vazia
+        SmackStackADT<String> vazia = new ArraySmackStack<>();
+        try {
+            vazia.smack();
+        } catch (EmptyCollectionException e) {
+            System.out.println("✅ Erro esperado: " + e.getMessage());
+        }
+
+        // Um elemento
+        SmackStackADT<String> umElemento = new ArraySmackStack<>();
+        umElemento.push("Único");
+        System.out.println("Antes do smack: " + umElemento);
+        System.out.println("Smack: " + umElemento.smack());
+        System.out.println("Após smack: " + umElemento);
+        System.out.println("Está vazia? " + umElemento.isEmpty());
+
+        // 4. Cenário prático - Sistema de Processamento com Prioridade
+        System.out.println("\n4. CENÁRIO PRÁTICO - PROCESSAMENTO COM PRIORIDADE:");
+        SmackStackADT<String> tarefas = new ArraySmackStack<>();
+
+        tarefas.push("Tarefa Baixa Prioridade");
+        tarefas.push("Tarefa Média Prioridade");
+        tarefas.push("Tarefa Alta Prioridade");
+        tarefas.push("Tarefa Urgente");
+
+        System.out.println("Fila de tarefas: " + tarefas);
+
+        // Processamento normal (LIFO) - tarefas urgentes primeiro
+        System.out.println("Processando do topo (urgentes): " + tarefas.pop());
+
+        // Smack - remover tarefa mais antiga (baixa prioridade)
+        System.out.println("Removendo tarefa mais antiga: " + tarefas.smack());
+        System.out.println("Fila restante: " + tarefas);
 
 
         /**

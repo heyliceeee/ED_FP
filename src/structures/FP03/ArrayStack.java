@@ -8,8 +8,8 @@ import java.util.Arrays;
 public class ArrayStack<T> implements StackADT<T> {
 
     private final int DEFAULT_CAPACITY = 100; // constante para representar a capacidade default do array
-    private int top; // int que representa o número de elementos e o seguinte posição disponivel no array
-    private T[] stack; // array de elementos genéricos que representam a stack
+    public int top; // int que representa o número de elementos e o seguinte posição disponivel no array
+    public T[] stack; // array de elementos genéricos que representam a stack
 
     /**
      * cria uma stack vazia utilizando a capacidade default
