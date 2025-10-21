@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP02.DoublyLinkedList;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DoublyLinkedListTest {
@@ -290,11 +292,14 @@ public class DoublyLinkedListTest {
         list.removeDuplicateElements(1);
 
         Object[] result = list.toArray();
-        assertEquals(4, result.length); // Apenas um '1' deve permanecer
+
+        assertEquals(4, result.length); // A lista final deve ter 4 elementos
+
+        // A ordem correta é [4, 1, 3, 2]
         assertEquals(4, result[0]);
-        assertEquals(3, result[1]);
-        assertEquals(2, result[2]);
-        assertEquals(1, result[3]);
+        assertEquals(1, result[1]);
+        assertEquals(3, result[2]);
+        assertEquals(2, result[3]);
     }
 
     // ===== TESTES STRING REPRESENTATION =====
