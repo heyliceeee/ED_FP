@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP04.CircularArrayQueue;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CircularArrayQueueTest {
@@ -15,6 +18,29 @@ public class CircularArrayQueueTest {
     void setUp() {
         queue = new CircularArrayQueue<>();
         stringQueue = new CircularArrayQueue<>();
+    }
+
+    @Test
+    void testIteratorConcurrentModification() {
+        queue.enqueue(10);
+        queue.enqueue(20);
+
+        Iterator<Integer> iterator = queue.iterator();
+        queue.enqueue(30); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::hasNext);
+    }
+
+    @Test
+    void testIteratorConcurrentModificationOnDequeue() throws EmptyCollectionException {
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        Iterator<Integer> iterator = queue.iterator();
+        queue.dequeue(); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     // Testes para enqueue

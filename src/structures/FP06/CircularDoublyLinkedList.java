@@ -5,12 +5,18 @@ import exceptions.EmptyCollectionException;
 import structures.FP02.DoublyLinkedList;
 import structures.FP02.DoublyNode;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Lista duplamente ligada circular
  *  - tail.next = head
  *  - head.prev = tail
  */
 public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
+    private int modCount;
+
     public CircularDoublyLinkedList() {
         super();
     }
@@ -37,6 +43,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             head = newNode;
         }
         size++;
+        modCount++;
     }
 
     /**
@@ -60,6 +67,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             tail = newNode;
         }
         size++;
+        modCount++;
     }
 
     /**
@@ -83,6 +91,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             tail.setNext(head);
         }
         size--;
+        modCount++;
 
         return removedElement;
     }
@@ -108,6 +117,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             head.setPrev(tail);
         }
         size--;
+        modCount++;
 
         return removedElement;
     }
@@ -153,6 +163,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             size--;
         }
 
+        modCount++;
         return removedElement;
     }
 
@@ -236,6 +247,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
         if (size > 1) {
             head = head.getNext();
             tail = tail.getNext();
+            modCount++;
         }
     }
 
@@ -246,6 +258,7 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
         if (size > 1) {
             head = head.getPrev();
             tail = tail.getPrev();
+            modCount++;
         }
     }
 
@@ -310,5 +323,121 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             sb.append(" {tail→head: ").append(tail.getNext() == head).append(", head←tail: ").append(head.getPrev() == tail).append("}");
 
         return sb.toString();
+    }
+
+    /**
+     * retorna um iterador dos elementos da lista
+     *
+     * @return um iterador dos elementos da lista
+     */
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T> {
+        private DoublyNode<T> current;
+        private int expectedModCount;
+        private boolean canRemove;
+        private DoublyNode<T> lastReturned;
+        private int count;
+
+        /**
+         * Construtor do iterador para CircularDoublyLinkedList
+         * Percorre do head para tail (uma volta completa)
+         */
+        public MyIterator() {
+            this.current = head;
+            this.expectedModCount = modCount;
+            this.canRemove = false;
+            this.lastReturned = null;
+            this.count = 0;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            checkForComodification();
+            return count < size; // Para após uma volta completa
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws java.util.NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() {
+            checkForComodification();
+
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in circular list iteration");
+            }
+
+            T element = current.getElement();
+            lastReturned = current;
+            current = current.getNext(); // Move para o próximo nó (circular)
+            count++;
+            canRemove = true;
+
+            return element;
+        }
+
+        /**
+         * Removes from the underlying collection the last element returned
+         * by this iterator (optional operation). This method can be called
+         * only once per call to {@link #next}.
+         *
+         * @throws UnsupportedOperationException if the {@code remove}
+         *         operation is not supported by this iterator
+         * @throws IllegalStateException if the {@code next} method has not
+         *         yet been called, or the {@code remove} method has already
+         *         been called after the last call to the {@code next} method
+         */
+        @Override
+        public void remove() {
+            checkForComodification();
+
+            if (!canRemove) {
+                throw new IllegalStateException("remove() can only be called once after next()");
+            }
+
+            if (lastReturned == null) {
+                throw new IllegalStateException("No element to remove");
+            }
+
+            try {
+                // Usa o método remove existente da lista circular
+                CircularDoublyLinkedList.this.remove(lastReturned.getElement());
+            } catch (EmptyCollectionException e) {
+                throw new IllegalStateException("Cannot remove from empty list");
+            }
+
+            // Atualiza o estado do iterador após remoção
+            expectedModCount = modCount; // remove() incrementou modCount
+            canRemove = false;
+            lastReturned = null;
+
+            // Ajusta o count pois removemos um elemento
+            count--;
+
+            // Não precisamos ajustar o current porque o método remove
+            // já atualizou a estrutura da lista circular
+        }
+
+        /**
+         * Verifica se houve modificação concorrente na lista circular
+         */
+        private void checkForComodification() {
+            if (expectedModCount != modCount) {
+                throw new ConcurrentModificationException("Circular list modified during iteration");
+            }
+        }
     }
 }

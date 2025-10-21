@@ -46,7 +46,7 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLink
         else
             addInOrder(elem);
 
-        this.modCount++;
+        modCount++;
     }
 
     /**
@@ -244,6 +244,8 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLink
             current = current.getNext();
         }
 
+        modCount++;
+
         return stack;
     }
 
@@ -263,6 +265,8 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLink
             current = current.getNext();
         }
 
+        modCount++;
+
         return stack;
     }
 
@@ -280,6 +284,8 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLink
             queue.enqueue(current.getElement());
             current = current.getPrev();
         }
+
+        modCount++;
 
         return queue;
     }

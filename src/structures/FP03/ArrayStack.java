@@ -4,12 +4,16 @@ package structures.FP03;
 import exceptions.EmptyCollectionException;
 import interfaces.StackADT;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayStack<T> implements StackADT<T> {
 
     private final int DEFAULT_CAPACITY = 100; // constante para representar a capacidade default do array
     public int top; // int que representa o número de elementos e o seguinte posição disponivel no array
     public T[] stack; // array de elementos genéricos que representam a stack
+    private  int modCount;
 
     /**
      * cria uma stack vazia utilizando a capacidade default
@@ -39,6 +43,7 @@ public class ArrayStack<T> implements StackADT<T> {
 
         stack[top] = elem; //o novo elemento fica no top
         top++; //top aponta para o elemento seguinte (vazio)
+        modCount++;
     }
 
     /**
@@ -53,6 +58,8 @@ public class ArrayStack<T> implements StackADT<T> {
             newStack[i] = stack[i];
 
         stack = newStack; //a stack agora é a stack expandida
+
+        modCount++;
     }
 
     /**
@@ -69,6 +76,7 @@ public class ArrayStack<T> implements StackADT<T> {
         top--; //top aponta para o elemento anterior
         T result = stack[top]; //elemento top
         stack[top] = null; //elemento top removido
+        modCount++;
 
         return result;
     }
@@ -123,5 +131,90 @@ public class ArrayStack<T> implements StackADT<T> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * retorna um iterador dos elementos da lista
+     *
+     * @return um iterador dos elementos da lista
+     */
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T> {
+        private int current;
+        private int expectedModCount;
+
+        /**
+         * Construtor do iterador para ArrayStack
+         * Percorre do TOPO para a BASE (ordem LIFO)
+         */
+        public MyIterator() {
+            this.current = top - 1; // Começa no topo (último elemento adicionado)
+            this.expectedModCount = modCount;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            checkForComodification();
+            return current >= 0; // Para quando chegar à base (índice 0)
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws java.util.NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() {
+            checkForComodification();
+
+            if (!hasNext())
+                throw new NoSuchElementException("No more elements in stack iteration");
+
+            T element = stack[current];
+            current--; // Move para o elemento anterior (em direção à base)
+
+            return element;
+        }
+
+        /**
+         * Removes from the underlying collection the last element returned
+         * by this iterator (optional operation). This method can be called
+         * only once per call to {@link #next}.
+         *
+         * @throws UnsupportedOperationException se a operação remove não for suportada
+         * @throws IllegalStateException se next() não foi chamado ou remove() já foi chamado
+         */
+        @Override
+        public void remove() {
+            // Em ArrayStack, remove() é complexo porque requer reindexação do array
+            // É mais seguro não suportar remove() em iteradores de array-based structures
+            throw new UnsupportedOperationException("Remove operation not supported for ArrayStack iterator");
+
+            // Alternativa: Implementação seria muito complexa pois teria que:
+            // 1. Saber qual elemento foi retornado por último
+            // 2. Remover esse elemento do array
+            // 3. Reindexar todos os elementos após a remoção
+            // 4. Atualizar top e current
+            // Isso quebraria a eficiência O(1) do stack
+        }
+
+        /**
+         * Verifica se houve modificação concorrente no stack
+         */
+        private void checkForComodification() {
+            if (expectedModCount != modCount)
+                throw new ConcurrentModificationException("Stack modified during iteration");
+        }
     }
 }

@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import structures.FP02.LinkedListNode;
 import structures.FP04.LinkedQueue;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedQueueTest {
@@ -16,6 +19,29 @@ public class LinkedQueueTest {
     public void setUp() {
         queue = new LinkedQueue<>();
         stringQueue = new LinkedQueue<>();
+    }
+
+    @Test
+    void testIteratorConcurrentModification() {
+        queue.enqueue(10);
+        queue.enqueue(20);
+
+        Iterator<Integer> iterator = queue.iterator();
+        queue.enqueue(30); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::hasNext);
+    }
+
+    @Test
+    void testIteratorConcurrentModificationOnDequeue() throws EmptyCollectionException {
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        Iterator<Integer> iterator = queue.iterator();
+        queue.dequeue(); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     // Testes para enqueue

@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP06.CircularDoublyLinkedList;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CircularDoublyLinkedListTest {
@@ -17,6 +20,29 @@ class CircularDoublyLinkedListTest {
     void setUp() {
         list = new CircularDoublyLinkedList<>();
         stringList = new CircularDoublyLinkedList<>();
+    }
+
+    @Test
+    void testIteratorConcurrentModification() {
+        list.addFirst(10);
+        list.addFirst(20);
+
+        Iterator<Integer> iterator = list.iterator();
+        list.addFirst(30); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::hasNext);
+    }
+
+    @Test
+    void testIteratorConcurrentModificationOnRotate() {
+        list.addFirst(10);
+        list.addFirst(20);
+        list.addFirst(30);
+
+        Iterator<Integer> iterator = list.iterator();
+        list.rotateForward(); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     // Testes para addFirst

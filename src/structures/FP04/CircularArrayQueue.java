@@ -5,6 +5,9 @@ import interfaces.QueueADT;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public class CircularArrayQueue<T> implements QueueADT<T> {
@@ -14,7 +17,7 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     private int rear; // int que representa o elemento rear da queue
     private int front; // int que representa o elemento front da queue
     private int size; // int que representa o tamanho da queue
-
+    private int modCount;
 
     /**
      * cria um array vazia e nula
@@ -48,6 +51,7 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         queue[rear] = element; //rear = novo elemento no final
         rear = (rear + 1) % queue.length; //rear volta á posicao inicial
         size++;
+        modCount++;
     }
 
     /**
@@ -72,6 +76,7 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
             front = (front + 1) % queue.length; //front volta á posicao inicial
 
             size--;
+            modCount++;
         }
 
         return result;
@@ -134,6 +139,8 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         queue = newQueue;
         front = 0;    // Reset front para início
         rear = size;  // Rear aponta para próxima posição vazia
+
+        modCount++;
     }
 
     @Override
@@ -146,5 +153,89 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
                 ", front=" + front +
                 ", size=" + size +
                 '}';
+    }
+
+    /**
+     * retorna um iterador dos elementos da lista
+     *
+     * @return um iterador dos elementos da lista
+     */
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T> {
+        private int current;
+        private int count;
+        private int expectedModCount;
+
+        /**
+         * Construtor do iterador para CircularArrayQueue
+         * Percorre da frente para trás (ordem FIFO) considerando a circularidade
+         */
+        public MyIterator() {
+            this.current = front; // Começa no front da queue
+            this.count = 0;
+            this.expectedModCount = modCount;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            checkForComodification();
+            return count < size; // Para após percorrer todos os elementos
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws java.util.NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() {
+            checkForComodification();
+
+            if (!hasNext())
+                throw new NoSuchElementException("No more elements in circular queue iteration");
+
+            T element = queue[current];
+            current = (current + 1) % queue.length; // Move circularmente para o próximo
+            count++;
+
+            return element;
+        }
+
+        /**
+         * Removes from the underlying collection the last element returned
+         * by this iterator (optional operation). This method can be called
+         * only once per call to {@link #next}.
+         *
+         * @throws UnsupportedOperationException se a operação remove não for suportada
+         * @throws IllegalStateException se next() não foi chamado ou remove() já foi chamado
+         */
+        @Override
+        public void remove() {
+            // Em estruturas baseadas em array, remove() é complexo e geralmente não suportado
+            // ou apenas suportado para o elemento atual com lógica complexa
+            throw new UnsupportedOperationException("Remove operation not supported for CircularArrayQueue iterator");
+
+            // Alternativa: Implementação complexa que requer reindexação
+            // É mais seguro não suportar remove() em iteradores de array circular
+        }
+
+        /**
+         * Verifica se houve modificação concorrente na queue circular
+         */
+        private void checkForComodification() {
+            if (expectedModCount != modCount)
+                throw new ConcurrentModificationException("Circular queue modified during iteration");
+        }
     }
 }

@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP03.ArrayStack;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayStackTest {
@@ -15,6 +18,29 @@ public class ArrayStackTest {
     void setUp() {
         stack = new ArrayStack<>();
         stringStack = new ArrayStack<>();
+    }
+
+    @Test
+    void testIteratorConcurrentModification() {
+        stack.push(10);
+        stack.push(20);
+
+        Iterator<Integer> iterator = stack.iterator();
+        stack.push(30); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::hasNext);
+    }
+
+    @Test
+    void testIteratorConcurrentModificationOnPop() throws EmptyCollectionException {
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        Iterator<Integer> iterator = stack.iterator();
+        stack.pop(); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     // Testes para push

@@ -66,7 +66,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
 
         this.rear++; // incrementa a posicao do fim da lista
         this.size++; // incrementa o tamanho da lista
-        this.modCount++; // incrementa apos modificacao bem sucedida
+        modCount++; // incrementa apos modificacao bem sucedida
     }
 
     /**
@@ -89,7 +89,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
 
         this.rear--; // reduz a posicao do fim da lista
         this.size--; // reduz o tamanho da lista
-        this.modCount++; // incrementa apos modificacao bem sucedida
+        modCount++; // incrementa apos modificacao bem sucedida
 
         return result;
     }
@@ -111,7 +111,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
         list[rear] = null; //remover ultimo elemento
 
         this.size--; //reduz o tamanho da lista
-        this.modCount++; // incrementa apos modificacao bem sucedida
+        modCount++; // incrementa apos modificacao bem sucedida
 
         return result;
     }
@@ -152,7 +152,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
 
         this.size--; //reduz o tamanho da lista
         this.rear--;
-        this.modCount++; // incrementa apos modificacao bem sucedida
+        modCount++; // incrementa apos modificacao bem sucedida
 
         return result; // retorna o elemento que foi removido
     }
@@ -242,6 +242,8 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
         T[] joinLists = Stream.concat(Arrays.stream(list), Arrays.stream(newList)).toArray(size -> (T[]) Array.newInstance(list.getClass().getComponentType(), size)); //junta as 2 listas (lista atual e a newList)
 
         list = joinLists; // a lista atual expande de tamanho
+
+        modCount++;
     }
 
     /**

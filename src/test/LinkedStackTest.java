@@ -5,6 +5,10 @@ import structures.FP03.LinkedStack;
 import exceptions.EmptyCollectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedStackTest {
@@ -15,6 +19,29 @@ public class LinkedStackTest {
     public void setUp() {
         stack = new LinkedStack<>();
         stringStack = new LinkedStack<>();
+    }
+
+    @Test
+    void testIteratorConcurrentModification() {
+        stack.push(10);
+        stack.push(20);
+
+        Iterator<Integer> iterator = stack.iterator();
+        stack.push(30); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::hasNext);
+    }
+
+    @Test
+    void testIteratorConcurrentModificationOnPop() throws EmptyCollectionException {
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        Iterator<Integer> iterator = stack.iterator();
+        stack.pop(); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     // Testes para push

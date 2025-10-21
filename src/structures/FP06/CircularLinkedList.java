@@ -4,11 +4,17 @@ import exceptions.EmptyCollectionException;
 import structures.FP02.DoublyLinkedList;
 import structures.FP02.DoublyNode;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Lista circular duplamente ligada
  * O último elemento aponta para o primeiro e vice-versa
  */
 public class CircularLinkedList<T> extends DoublyLinkedList<T> {
+    private int modCount;
+
     public CircularLinkedList() {
         super();
     }
@@ -30,6 +36,8 @@ public class CircularLinkedList<T> extends DoublyLinkedList<T> {
             head.setPrev(tail);
             tail.setNext(head);
         }
+
+        modCount++;
     }
 
     /**
@@ -53,6 +61,7 @@ public class CircularLinkedList<T> extends DoublyLinkedList<T> {
             tail = newNode;
         }
         size++;
+        modCount++;
     }
 
     /**
@@ -76,6 +85,7 @@ public class CircularLinkedList<T> extends DoublyLinkedList<T> {
             tail.setNext(head);
         }
         size--;
+        modCount++;
 
         return removedElement;
     }
@@ -101,6 +111,7 @@ public class CircularLinkedList<T> extends DoublyLinkedList<T> {
             head.setPrev(tail);
         }
         size--;
+        modCount++;
 
         return removedElement;
     }
@@ -167,5 +178,47 @@ public class CircularLinkedList<T> extends DoublyLinkedList<T> {
 
         sb.append("]");
         return sb.toString();
+    }
+
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private DoublyNode<T> current = head;
+            private int initialSize = size;
+            private int expectedModCount = modCount;
+            private boolean canRemove = false;
+            private int count = 0;
+
+            private void checkForComodification() {
+                if (expectedModCount != modCount)
+                    throw new ConcurrentModificationException();
+            }
+
+            @Override
+            public boolean hasNext() {
+                checkForComodification();
+                return count < initialSize;
+            }
+
+            @Override
+            public T next() {
+                checkForComodification();
+                if (!hasNext())
+                    throw new NoSuchElementException();
+                T element = current.getElement();
+                current = current.getNext();
+                count++;
+                canRemove = true;
+                return element;
+            }
+
+            @Override
+            public void remove() {
+                checkForComodification();
+                if (!canRemove)
+                    throw new IllegalStateException();
+                // Implementação complexa para lista circular - pode ser omitida
+                throw new UnsupportedOperationException("Remove not supported in circular list iterator");
+            }
+        };
     }
 }

@@ -4,10 +4,15 @@ import exceptions.EmptyCollectionException;
 import interfaces.StackADT;
 import structures.FP02.LinkedListNode;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class LinkedStack<T> implements StackADT<T> {
 
     private LinkedListNode<T> top; // node que representa o elemento top da stack
     private int size; // int que representa o tamanho da stack
+    private int modCount;
 
     /**
      * cria uma stack vazia e nula
@@ -41,6 +46,7 @@ public class LinkedStack<T> implements StackADT<T> {
         top = newNode; //top = novo elemento
 
         size++;
+        modCount++;
     }
 
     /**
@@ -59,6 +65,7 @@ public class LinkedStack<T> implements StackADT<T> {
         top = top.getNext(); //top = elemento seguinte ao removido
 
         size--;
+        modCount++;
 
         return result;
     }
@@ -104,5 +111,115 @@ public class LinkedStack<T> implements StackADT<T> {
                 "top=" + top +
                 ", size=" + size +
                 '}';
+    }
+
+    /**
+     * retorna um iterador dos elementos da lista
+     *
+     * @return um iterador dos elementos da lista
+     */
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T> {
+        private LinkedListNode<T> current;
+        private int expectedModCount;
+        private boolean canRemove;
+        private LinkedListNode<T> lastReturned;
+
+        /**
+         * Construtor do iterador para LinkedStack
+         * Percorre do topo para a base (ordem LIFO)
+         */
+        public MyIterator() {
+            this.current = top; // Começa no topo da stack
+            this.expectedModCount = modCount;
+            this.canRemove = false;
+            this.lastReturned = null;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            checkForComodification();
+            return current != null;
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws java.util.NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() {
+            checkForComodification();
+
+            if (!hasNext())
+                throw new NoSuchElementException("No more elements in stack iteration");
+
+            T element = current.getElement();
+            lastReturned = current;
+            current = current.getNext(); // Move para o próximo nó (em direção à base)
+            canRemove = true;
+
+            return element;
+        }
+
+        /**
+         * Removes from the underlying collection the last element returned
+         * by this iterator (optional operation). This method can be called
+         * only once per call to {@link #next}.
+         *
+         * @throws UnsupportedOperationException if the {@code remove}
+         *         operation is not supported by this iterator
+         * @throws IllegalStateException if the {@code next} method has not
+         *         yet been called, or the {@code remove} method has already
+         *         been called after the last call to the {@code next} method
+         */
+        @Override
+        public void remove() {
+            checkForComodification();
+
+            if (!canRemove)
+                throw new IllegalStateException("remove() can only be called once after next()");
+
+            if (lastReturned == null)
+                throw new IllegalStateException("No element to remove");
+
+            // Remoção em stack é complexa - geralmente não suportada ou limitada
+            // Implementação básica que remove apenas se for o topo
+            if (lastReturned == top) {
+                try {
+                    pop(); // Remove o topo usando o método existente
+                } catch (EmptyCollectionException e) {
+                    throw new IllegalStateException("Cannot remove from empty stack");
+                }
+            } else
+                throw new UnsupportedOperationException("Can only remove top element from stack iterator");
+
+            // Atualiza o estado do iterador
+            expectedModCount = modCount; // pop() incrementou modCount
+            canRemove = false;
+            lastReturned = null;
+
+            // O current já foi atualizado pelo pop() se era o topo
+            // Se não era o topo, mantém o current atual
+        }
+
+        /**
+         * Verifica se houve modificação concorrente na stack
+         */
+        private void checkForComodification() {
+            if (expectedModCount != modCount)
+                throw new ConcurrentModificationException("Stack modified during iteration");
+        }
     }
 }

@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP02.LinkedList;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedListTest {
@@ -15,6 +18,29 @@ public class LinkedListTest {
     void setUp() {
         list = new LinkedList<>();
         stringList = new LinkedList<>();
+    }
+
+    @Test
+    void testIteratorConcurrentModification() {
+        list.addFirst(10);
+        list.addFirst(20);
+
+        Iterator<Integer> iterator = list.iterator();
+        list.addFirst(30); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::hasNext);
+    }
+
+    @Test
+    void testIteratorConcurrentModificationOnRemove() throws EmptyCollectionException {
+        list.addFirst(10);
+        list.addFirst(20);
+        list.addFirst(30);
+
+        Iterator<Integer> iterator = list.iterator();
+        list.removeFirst(); // Modificação externa
+
+        assertThrows(ConcurrentModificationException.class, iterator::next);
     }
 
     // Testes para addFirst

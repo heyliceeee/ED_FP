@@ -1,6 +1,11 @@
 package structures.FP02;
 
 import exceptions.EmptyCollectionException;
+import structures.FP05.ArrayOrderedList;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Implementação de uma lista ligada genérica.
@@ -16,6 +21,7 @@ public class LinkedList<T> {
     private LinkedListNode<T> tail; // ultimo elemento da lista
     private SentinelNode<T> sentinel; // o no sentinela
     private int size; // o tamanho da lista
+    private int modCount = 0;
 
     /**
      * Construtor padrão que inicializa uma lista ligada vazia.
@@ -44,6 +50,7 @@ public class LinkedList<T> {
             head = newNode;        // o novo node passa a ser o head
 
             size++;
+            modCount++;
         }
     }
 
@@ -61,6 +68,7 @@ public class LinkedList<T> {
         sentinel.setNext(newNode);
 
         size++;
+        modCount++;
     }
 
     /**
@@ -81,6 +89,7 @@ public class LinkedList<T> {
             tail = newNode; //tail fica com o valor do novo node
 
             size++;
+            modCount++;
         }
     }
 
@@ -97,6 +106,7 @@ public class LinkedList<T> {
 
         current.setNext(newNode); //adicionar um novo node á cauda (último elemento)
         size++;
+        modCount++;
     }
 
     /**
@@ -115,6 +125,8 @@ public class LinkedList<T> {
         if (head == null)
             tail = null;
 
+        modCount++;
+
         return removedElem;
     }
 
@@ -128,6 +140,7 @@ public class LinkedList<T> {
         // o sentinela passa a apontar para o segundo elemento real
         sentinel.setNext(sentinel.getNext().getNext());
         size--;
+        modCount++;
     }
 
     /**
@@ -157,6 +170,7 @@ public class LinkedList<T> {
         }
 
         this.size--;
+        modCount++;
 
         return removedElem;
     }
@@ -183,6 +197,7 @@ public class LinkedList<T> {
         // corta a referência para o último nó
         current.setNext(null);
         size--;
+        modCount++;
     }
 
     /**
@@ -233,5 +248,126 @@ public class LinkedList<T> {
      */
     public int size() {
         return size;
+    }
+
+    /**
+     * retorna um iterador dos elementos da lista
+     *
+     * @return um iterador dos elementos da lista
+     */
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+
+    private class MyIterator implements Iterator<T> {
+        private LinkedListNode<T> current;
+        private LinkedListNode<T> lastReturned;
+        private int expectedModCount;
+        private boolean canRemove;
+
+        /**
+         * Construtor do iterador
+         */
+        public MyIterator() {
+            this.current = head;
+            this.lastReturned = null;
+            this.expectedModCount = modCount;
+            this.canRemove = false;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            checkForComodification();
+            return current != null;
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws java.util.NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() {
+            checkForComodification();
+
+            if (!hasNext())
+                throw new NoSuchElementException("No more elements in iteration");
+
+            T element = current.getElement();
+            lastReturned = current;
+            current = current.getNext();
+            canRemove = true;
+
+            return element;
+        }
+
+        /**
+         * Removes from the underlying collection the last element returned
+         * by this iterator (optional operation). This method can be called
+         * only once per call to {@link #next}.
+         *
+         * @throws UnsupportedOperationException if the {@code remove}
+         *         operation is not supported by this iterator
+         * @throws IllegalStateException if the {@code next} method has not
+         *         yet been called, or the {@code remove} method has already
+         *         been called after the last call to the {@code next} method
+         */
+        @Override
+        public void remove() {
+            checkForComodification();
+
+            if (!canRemove)
+                throw new IllegalStateException("remove() can only be called once after next()");
+
+            if (lastReturned == null)
+                throw new IllegalStateException("No element to remove");
+
+            // Remove o nó lastReturned da lista
+            if (lastReturned == head) {
+                try {
+                    removeFirst();
+                } catch (EmptyCollectionException e) {
+                    throw new IllegalStateException("Cannot remove from empty list");
+                }
+            } else {
+                // Encontra o nó anterior ao lastReturned
+                LinkedListNode<T> prev = head;
+                while (prev != null && prev.getNext() != lastReturned)
+                    prev = prev.getNext();
+
+                if (prev != null) {
+                    // Remove o nó do meio ou do final
+                    prev.setNext(lastReturned.getNext());
+
+                    // Se era o último nó, atualiza tail
+                    if (lastReturned == tail)
+                        tail = prev;
+                    size--;
+                    modCount++;
+                }
+            }
+
+            // Atualiza o expectedModCount pois modificámos a lista
+            expectedModCount = modCount;
+            canRemove = false;
+            lastReturned = null;
+        }
+
+        /**
+         * Verifica se houve modificação concorrente na lista
+         */
+        private void checkForComodification() {
+            if (expectedModCount != modCount)
+                throw new ConcurrentModificationException("List modified during iteration");
+        }
     }
 }
