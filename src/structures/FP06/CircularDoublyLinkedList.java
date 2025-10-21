@@ -134,9 +134,10 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
         T removedElement = current.getElement();
 
         if (size == 1) {
-            // Único elemento
+            // Único elemento - lista fica vazia
             head = null;
             tail = null;
+            size = 0; // ← CORREÇÃO: decrementar size
         } else if (current == head) {
             // Remove primeiro elemento
             removeFirst();
@@ -246,6 +247,38 @@ public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
             head = head.getPrev();
             tail = tail.getPrev();
         }
+    }
+
+    /**
+     * Verifica se a lista contém um elemento específico
+     * @param element o elemento a procurar
+     * @return true se o elemento existir, false caso contrário
+     */
+    public boolean contains(T element) {
+        if (isEmpty())
+            return false;
+
+        DoublyNode<T> current = head;
+        int count = 0;
+
+        // Percorre a lista circular (máximo de 'size' iterações)
+        while (count < size) {
+            T currentElement = current.getElement();
+
+            // Verificação segura para null
+            if (element == null) {
+                if (currentElement == null)
+                    return true;
+            } else {
+                if (element.equals(currentElement))
+                    return true;
+            }
+
+            current = current.getNext();
+            count++;
+        }
+
+        return false;
     }
 
     /**
