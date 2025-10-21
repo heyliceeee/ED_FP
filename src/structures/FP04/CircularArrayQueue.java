@@ -29,7 +29,8 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
      */
     public CircularArrayQueue(int initialCapacity) {
         this.size = this.front = this.rear = 0;
-        this.queue = (T[]) (new Object[initialCapacity]);
+        int actualCapacity = Math.max(initialCapacity, 1);
+        this.queue = (T[]) (new Object[actualCapacity]);
     }
 
 
@@ -44,12 +45,9 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         if(isFull()) //se a queue tiver cheia
             expandCapacity(); //expande
 
-        else {
-            queue[rear] = element; //rear = novo elemento no final
-            rear = (rear + 1) % queue.length; //rear volta á posicao inicial
-
-            size++;
-        }
+        queue[rear] = element; //rear = novo elemento no final
+        rear = (rear + 1) % queue.length; //rear volta á posicao inicial
+        size++;
     }
 
     /**
@@ -128,11 +126,14 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
      * expande o array
      */
     private void expandCapacity() {
-        newQueue = (T[]) (new Object[DEFAULT_CAPACITY]);
+        newQueue = (T[]) (new Object[queue.length == 0 ? DEFAULT_CAPACITY : queue.length * 2]); // Dobrar a capacidade
 
-        T[] copyQueue = Stream.concat(Arrays.stream(queue), Arrays.stream(newQueue)).toArray(size -> (T[]) Array.newInstance(queue.getClass().getComponentType(), size));
+        for (int i = 0; i < size; i++) // Copiar elementos mantendo a ordem FIFO considerando a circularidade
+            newQueue[i] = queue[(front + i) % queue.length];
 
-        queue = copyQueue;
+        queue = newQueue;
+        front = 0;    // Reset front para início
+        rear = size;  // Rear aponta para próxima posição vazia
     }
 
     @Override
