@@ -262,14 +262,15 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
 
         @Override
         public boolean hasNext() {
+            checkForComodification();
             return current != null;
         }
 
         @Override
         public T next() {
-            if (!hasNext()) {
+            checkForComodification();
+            if (!hasNext())
                 throw new NoSuchElementException("Não há mais elementos");
-            }
             T element = current.getElement();
             current = current.getNext();
             canRemove = true;
@@ -278,21 +279,19 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
 
         @Override
         public void remove() {
-            if (!canRemove) {
+            if (!canRemove)
                 throw new IllegalStateException("next() deve ser chamado antes de remove()");
-            }
-            if (expectedModCount != modCount) {
+            if (expectedModCount != modCount)
                 throw new ConcurrentModificationException("Lista modificada durante iteração");
-            }
 
             DoublyNode<T> toRemove = current != null ? current.getPrev() : tail;
 
             try {
-                if (toRemove == head) {
+                if (toRemove == head)
                     removeFirst();
-                } else if (toRemove == tail) {
+                else if (toRemove == tail)
                     removeLast();
-                } else {
+                else {
                     DoublyNode<T> prev = toRemove.getPrev();
                     DoublyNode<T> next = toRemove.getNext();
                     prev.setNext(next);
@@ -305,6 +304,11 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
             } catch (EmptyCollectionException e) {
                 throw new IllegalStateException("Erro durante remoção: " + e.getMessage());
             }
+        }
+
+        private void checkForComodification() {
+            if (expectedModCount != modCount)
+                throw new ConcurrentModificationException("Lista modificada durante iteração");
         }
     }
 }

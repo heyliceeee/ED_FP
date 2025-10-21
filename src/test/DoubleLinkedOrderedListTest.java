@@ -560,7 +560,7 @@ class DoubleLinkedOrderedListTest {
         assertEquals(3, list.size());
         assertEquals(30, list.first());
         assertEquals(10, list.last());
-        
+
         // reverseInPlace() inverte a ordem física, mas quebra a ordenação lógica
         assertFalse(list.isOrdered());
     }
