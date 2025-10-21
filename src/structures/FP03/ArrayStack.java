@@ -45,7 +45,8 @@ public class ArrayStack<T> implements StackADT<T> {
      * expanda a capacidade da stack
      */
     private void expandCapacity() {
-        T[] newStack = (T[]) new Object[stack.length * 2]; //cria uma nova stack com o dobro da capacidade da stack anterior
+        int newCapacity = stack.length == 0 ? DEFAULT_CAPACITY : stack.length * 2; //cria uma nova stack com o dobro da capacidade da stack anterior
+        T[] newStack = (T[]) new Object[newCapacity];
 
         //copiar os elementos da stack anterior para a nova stack
         for(int i=0; i < stack.length; i++)
