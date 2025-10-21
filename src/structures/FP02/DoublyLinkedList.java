@@ -264,10 +264,10 @@ public class DoublyLinkedList<T> {
             throw new UnsupportedOperationException("Esta operação só é válida para listas de inteiros.");
 
         if (isEmpty()) // lista vazia
-            throw new EmptyCollectionException("List");
+            throw new EmptyCollectionException("Doubly Linked List");
 
         DoublyLinkedList<Integer> evenList = new DoublyLinkedList<>(); // Cria uma nova DLL que vai guardar apenas os elementos pares
-        DoublyNode<T> current = head; // Começa a percorrer a lista a partir do head
+        DoublyNode<T> current = tail; // Começa a percorrer a lista a partir do tail
 
         // Percorre todos os nodes
         while (current != null) {
