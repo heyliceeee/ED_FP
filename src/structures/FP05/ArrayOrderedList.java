@@ -255,15 +255,16 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
         if (index < 0 || index >= rear) // Valida o índice
             throw new IndexOutOfBoundsException("Índice inválido: " + index);
 
-        T result = (T) list[index];// Guarda o elemento que será removido
+        T result = list[index];// Guarda o elemento que será removido
 
         for (int i = index; i < rear - 1; i++)// Desloca todos os elementos após o índice removido para a esquerda
             list[i] = list[i + 1];
 
         // Limpa a última posição e atualiza os contadores
         list[rear - 1] = null;
-        this.rear--;
-        this.modCount++; // Incrementa o contador de modificações
+        rear--;
+        size--;
+        modCount++; // Incrementa o contador de modificações
 
         return result;
     }
@@ -283,15 +284,13 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
 
     private class MyIterator<T> implements Iterator<T> {
         private int current, lastReturnedIndex, expectedModCount;
-        private final int modCount;
         private final T[] items;
 
 
         public MyIterator() {
             this.current = 0;
             this.lastReturnedIndex = -1;
-            this.modCount = ArrayOrderedList.this.rear;
-            this.expectedModCount = ArrayOrderedList.this.size;
+            this.expectedModCount = ArrayOrderedList.this.modCount;
             this.items = (T[]) ArrayOrderedList.this.list;
         }
 
@@ -304,10 +303,10 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
          */
         @Override
         public boolean hasNext() throws ConcurrentModificationException {
-            if(expectedModCount != modCount) // Verifica se a lista foi modificada durante a iteração. Compara o tamanho esperado (capturado no início da iteração) com o tamanho atual da lista
-                throw new ConcurrentModificationException("concorrência");
+            if(expectedModCount != ArrayOrderedList.this.modCount) // Verifica se a lista foi modificada durante a iteração. Compara o tamanho esperado (capturado no início da iteração) com o tamanho atual da lista
+                throw new ConcurrentModificationException("Lista modificada durante a iteração");
 
-            return (this.current < rear); // Verifica se o indice atual é válido
+            return (this.current < ArrayOrderedList.this.rear); // Verifica se o indice atual é válido
         }
 
         /**
@@ -322,9 +321,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
                 throw new NoSuchElementException("Não há mais elementos na iteração. Current: " + current + ", Rear: " + rear);
 
             T temp = (T) items[this.current]; // acesso ao elemento atual
-
             lastReturnedIndex = current; // guarda o indice do elemento que esta a ser retornado
-
             this.current++; // prepara para o proximo elemento
 
             return temp; // retorna o elemento
@@ -338,8 +335,8 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
          */
         @Override
         public void remove() throws ConcurrentModificationException {
-            if(expectedModCount != modCount) // verifica se ha modificacoes concorrentes na lista
-                throw new ConcurrentModificationException("concorrencia");
+            if(expectedModCount != ArrayOrderedList.this.modCount) // verifica se ha modificacoes concorrentes na lista
+                throw new ConcurrentModificationException("Lista modificada durante a iteração");
 
             if(lastReturnedIndex == -1) //verifica se next() foi chamado e se remove() não foi chamado já para este elemento
                 throw new IllegalArgumentException("next() deve ser chamado antes de remove(), e remove() só pode ser chamado uma vez por elemento");
@@ -352,7 +349,7 @@ public class ArrayOrderedList<T>  implements OrderedListADT<T>, Iterable<T> {
 
                 lastReturnedIndex = -1; // Reseta lastReturnedIndex para prevenir múltiplas chamadas a remove()
 
-                expectedModCount = modCount; // Atualiza o expectedModCount porque fizemos uma modificação através do iterador
+                expectedModCount = ArrayOrderedList.this.modCount; // Atualiza o expectedModCount porque fizemos uma modificação através do iterador
 
             } catch (IndexOutOfBoundsException e) {
                 throw new ConcurrentModificationException("Elemento não encontrado durante remoção");
