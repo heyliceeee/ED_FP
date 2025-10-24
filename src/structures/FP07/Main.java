@@ -48,6 +48,6 @@ public class Main {
         /**
          * 5. Acrescentar um método recursivo à sua implementação de LL q seja capaz de inverter a ordem dos elems.
          */
-        
+
     }
 }
