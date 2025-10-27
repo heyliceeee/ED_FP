@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP02.LinkedList;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
@@ -18,6 +20,25 @@ public class LinkedListTest {
     void setUp() {
         list = new LinkedList<>();
         stringList = new LinkedList<>();
+    }
+
+    @Test
+    void testPrintRecursive() {
+        LinkedList<String> list = new LinkedList<>();
+        list.addLast("A");
+        list.addFirst("B");
+        list.addLast("C");
+
+        // Capturar saída do System.out
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        list.printRecursive();
+
+        System.setOut(System.out); // Restaurar System.out
+
+        String expected = "B A C ";
+        assertEquals(expected, outContent.toString());
     }
 
     @Test
