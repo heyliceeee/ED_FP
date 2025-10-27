@@ -309,6 +309,29 @@ public class LinkedList<T> {
         replaceRecursive(node.getNext(), existingElem, newElem); // chamada recursiva
     }
 
+
+    /**
+     * recursivamente inverte a ordem dos elementos
+     */
+    public void reverse() {
+        head = reverseRecursive(head, null);
+    }
+
+    /**
+     * recursivamente inverte a ordem dos elementos
+     * @param current no atual
+     * @param prev no anterior da atual
+     * @return a lista invertida
+     */
+    private LinkedListNode<T> reverseRecursive(LinkedListNode<T> current, LinkedListNode<T> prev) {
+        if (current == null)// caso base: fim da lista
+            return prev;
+
+        LinkedListNode<T> nextNode = current.getNext();  // guardar próximo
+        current.setNext(prev); // inverter ligação
+        return reverseRecursive(nextNode, current); // recursão
+    }
+
     /**
      * retorna um iterador dos elementos da lista
      *

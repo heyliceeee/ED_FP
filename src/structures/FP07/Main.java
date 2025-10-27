@@ -115,8 +115,18 @@ public class Main {
 
 
         /**
-         * 5. Acrescentar um método recursivo à sua implementação de LL q seja capaz de inverter a ordem dos elems.
+         * 5. Acrescenta um método recursivo à sua implementação de LL q seja capaz de inverter a ordem dos elems.
          */
+        LinkedList<String> lista4 = new LinkedList<>();
+        lista4.addFirst("Duarte");
+        lista4.addFirst("Carla");
+        lista4.addFirst("Bruno");
+        lista4.addFirst("Alice");
 
+        System.out.println("Lista original: " + lista4);
+
+        lista4.reverse();
+
+        System.out.println("Lista invertida: " + lista4);
     }
 }
