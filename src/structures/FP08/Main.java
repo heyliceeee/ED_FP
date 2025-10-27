@@ -129,13 +129,18 @@ public class Main {
          * Parte II
          * 1. Qual é o algoritmo de pesquisa + eficiente, a binary search ou a linear search?
          */
-
+        // R:
+        // Em arrays grds e ordenados → Binary Search é mt + eficiente.
+        // Em LL ou dados n ordenados → Linear Search é + prática.
 
 
         /**
          * 2. Qual é o algoritmo de ordenação + eficiente, o Quick Sort ou o Merge Sort?
          */
-
+        // R:
+        // Pra arrays grds → Quick Sort costuma ser + rápido na prática.
+        // Pra LL ou qd precisas de estabilidade → Merge Sort é a mlhr escolha.
+        // Em termos teóricos, Merge Sort é + previsível (pior caso garantido 𝑂(𝑛 log⁡ 𝑛)), enqt Quick Sort é + rápido em média, mas pode degradar para 𝑂(𝑛2) se mal implementado.
     }
 
     private static LinkedList<Carro> resetCarros() {
