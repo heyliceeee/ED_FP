@@ -97,6 +97,28 @@ public class DoublyLinkedList<T> {
         System.out.println("null");
     }
 
+
+    public String toReversedString() {
+        return toReversedString(tail);
+    }
+
+    /**
+     * retorna a lista invertida
+     * @param node no atual
+     * @return a lista invertida
+     */
+    private String toReversedString(DoublyNode<T> node) {
+        if (node == null) return ""; // caso base
+
+        // Se for o último elemento (head), não acrescenta vírgula
+        if (node.getPrev() == null)
+            return node.getElement().toString();
+
+        // Caso geral: elemento atual + chamada recursiva para o anterior
+        return node.getElement().toString() + ", " + toReversedString(node.getPrev());
+    }
+
+
     /**
      * Método recursivo: imprime do início para o fim
      */

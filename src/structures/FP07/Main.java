@@ -81,11 +81,21 @@ public class Main {
         // R: A recursividade é uma ferramenta conceptual poderosa, mas n é a sol universal. O truque é sbr qd a clareza compensa e qd a eficiência deve prevalecer.
 
 
-
         /**
          * 3. Acrescenta um método recursivo à implementação de DLL q devolva o conteúdo da list c a ordem dos elems invertida.
          */
-        
+        DoublyLinkedList<String> lista2 = new DoublyLinkedList<>();
+
+        lista2.addFirst("Duarte");
+        lista2.addFirst("Carla");
+        lista2.addFirst("Bruno");
+        lista2.addFirst("Alice");
+
+        System.out.println("Lista normal (head → tail):");
+        lista2.printForward();
+
+        System.out.println("\nLista invertida (tail → head):");
+        System.out.println("[" + lista2.toReversedString() + "]");
 
 
         /**
