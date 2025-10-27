@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.FP02.DoublyLinkedList;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -382,5 +384,64 @@ public class DoublyLinkedListTest {
         list.removeDuplicateElements(1);
 
         assertEquals(3, list.getSize()); // Nada deve ser removido
+    }
+
+    @Test
+    void testPrintForward() {
+        DoublyLinkedList<String> list = new DoublyLinkedList<>();
+        list.addFirst("Duarte");
+        list.addFirst("Carla");
+        list.addFirst("Bruno");
+        list.addFirst("Alice");
+
+        // Capturar saída do System.out
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        list.printForward();
+
+        System.setOut(originalOut);// Restaurar System.out
+
+        String expected = "Alice Bruno Carla Duarte ";
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    void testPrintBackward() {
+        DoublyLinkedList<String> list = new DoublyLinkedList<>();
+        list.addFirst("Duarte");
+        list.addFirst("Carla");
+        list.addFirst("Bruno");
+        list.addFirst("Alice");
+
+        // Capturar saída do System.out
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        list.printBackward();
+
+
+        System.setOut(originalOut);// Restaurar System.out
+
+        String expected = "Duarte Carla Bruno Alice ";
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    void testEmptyListPrintsNothing() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        list.printForward();
+        list.printBackward();
+
+        System.setOut(originalOut);
+
+        assertEquals("", outContent.toString());
     }
 }
