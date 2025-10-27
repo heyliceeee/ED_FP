@@ -11,7 +11,7 @@ import structures.FP04.LinkedQueue;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLinkedList<T> implements OrderedListADT<T> {
+public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoublyLinkedList<T> implements OrderedListADT<T>, Iterable<T> {
     private int modCount;
 
     public DoubleLinkedOrderedList() {

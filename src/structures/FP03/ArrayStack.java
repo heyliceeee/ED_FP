@@ -8,7 +8,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayStack<T> implements StackADT<T> {
+public class ArrayStack<T> implements StackADT<T>, Iterable<T> {
 
     private final int DEFAULT_CAPACITY = 100; // constante para representar a capacidade default do array
     public int top; // int que representa o número de elementos e o seguinte posição disponivel no array

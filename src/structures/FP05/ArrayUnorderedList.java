@@ -7,7 +7,7 @@ import interfaces.UnorderedListADT;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayUnorderedList<T> implements UnorderedListADT<T> {
+public class ArrayUnorderedList<T> implements UnorderedListADT<T>, Iterable<T> {
     private final int DEFAULT_CAPACITY = 100; //constante para representar a capacidade default do array
     private T[] list; //array de elementos genéricos que representam a lista
     private int rear; // int que representa o elemento rear da lista

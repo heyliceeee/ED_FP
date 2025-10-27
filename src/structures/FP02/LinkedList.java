@@ -2,6 +2,7 @@ package structures.FP02;
 
 import exceptions.EmptyCollectionException;
 import structures.FP05.ArrayOrderedList;
+import structures.FP08.Carro;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -15,7 +16,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T> O tipo de dados armazenados na lista.
  */
-public class LinkedList<T> {
+public class LinkedList<T> implements Iterable<T> {
 
     private LinkedListNode<T> head; // primeiro elemento da lista
     private LinkedListNode<T> tail; // ultimo elemento da lista
@@ -108,6 +109,24 @@ public class LinkedList<T> {
         size++;
         modCount++;
     }
+
+    /**
+     * Retorna o elemento do indice especifico
+     * @param index indice do elemento
+     * @return o elemento do indice especificado
+     */
+    public T get(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException("Index: " + index);
+
+        LinkedListNode<T> current = head;
+
+        for (int i = 0; i < index; i++)
+            current = current.getNext();
+
+        return current.getElement();
+    }
+
 
     /**
      * Remove o primeiro elemento da lista (head).
@@ -249,6 +268,32 @@ public class LinkedList<T> {
 
         System.out.print(node.getElement() + " ");
         printRecursive(node.getNext()); // chamada recursiva
+    }
+
+    /**
+     * ordernar os elementos
+     */
+    public void sortLinkedList() {
+        if (head == null || size < 2) // lista vazia ou com 1 elemento já está ordenada
+            return;
+
+        for (int i = 0; i < size - 1; i++) { // Bubble Sort adaptado para LinkedList
+            LinkedListNode<T> current = head;
+            LinkedListNode<T> next = head.getNext();
+
+            for (int j = 0; j < size - i - 1; j++) {
+                Comparable<T> elemAtual = (Comparable<T>) current.getElement();
+
+                if (elemAtual.compareTo(next.getElement()) > 0) {
+                    // troca os elementos
+                    T temp = current.getElement();
+                    current.setElement(next.getElement());
+                    next.setElement(temp);
+                }
+                current = next;
+                next = next.getNext();
+            }
+        }
     }
 
     @Override

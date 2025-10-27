@@ -8,7 +8,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedStack<T> implements StackADT<T> {
+public class LinkedStack<T> implements StackADT<T>, Iterable<T> {
 
     private LinkedListNode<T> top; // node que representa o elemento top da stack
     private int size; // int que representa o tamanho da stack

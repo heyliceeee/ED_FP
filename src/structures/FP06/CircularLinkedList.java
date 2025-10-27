@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  * Lista circular duplamente ligada
  * O último elemento aponta para o primeiro e vice-versa
  */
-public class CircularLinkedList<T> extends DoublyLinkedList<T> {
+public class CircularLinkedList<T> extends DoublyLinkedList<T> implements Iterable<T> {
     private int modCount;
 
     public CircularLinkedList() {

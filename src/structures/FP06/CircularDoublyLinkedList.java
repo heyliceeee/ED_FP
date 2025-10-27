@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
  *  - tail.next = head
  *  - head.prev = tail
  */
-public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> {
+public class CircularDoublyLinkedList<T> extends DoublyLinkedList<T> implements Iterable<T> {
     private int modCount;
 
     public CircularDoublyLinkedList() {

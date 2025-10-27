@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
-public class CircularArrayQueue<T> implements QueueADT<T> {
+public class CircularArrayQueue<T> implements QueueADT<T>, Iterable<T> {
     private final int DEFAULT_CAPACITY = 100; // constante para representar a capacidade default do array
     private T[] queue; // array de elementos genéricos que representam a queue
     private T[] newQueue; // array de elementos genéricos que representam uma nova queue

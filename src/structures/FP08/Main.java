@@ -1,5 +1,7 @@
 package structures.FP08;
 
+import structures.FP02.LinkedList;
+
 import java.util.Arrays;
 
 public class Main {
@@ -26,10 +28,29 @@ public class Main {
 
 
         /**
-         * 2. Criar uma classe q represente uma entidade, p.ex. um carro, assim cm algumas q ache relevantes pra o representar. Armazenar instâncias dessa entidade numa LL e usar os seguintes métodos de pesquisa: linear search, binary search pra encontrar um determinado elem.
+         * 2. Cria uma classe q represente uma entidade, p.ex. um carro, assim cm algumas q ache relevantes pra o representar. Armazenar instâncias dessa entidade numa LL e usar os seguintes métodos de pesquisa: linear search, binary search pra encontrar um determinado elem.
          * Nota: Os métodos usados no exercício anterior e q se encontram nos slides respetivos à aula teórica terão de ser adaptados pra LL.
          */
+        LinkedList<Carro> carros2 = new LinkedList<>();
+        carros2.addFirst(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros2.addFirst(new Carro("22-BB-22", "Honda", "Civic", 2020));
+        carros2.addFirst(new Carro("33-CC-33", "Ford", "Focus", 2019));
+        carros2.addFirst(new Carro("44-DD-44", "BMW", "320d", 2021));
 
+        System.out.println("Antes do sort: " + carros2);
+        carros2.sortLinkedList();
+        System.out.println("Depois do sort: " + carros2);
+
+        // 🔹 Pesquisa linear
+        System.out.println("Pesquisa linear por matrícula 33-CC-33:");
+        Carro encontradoLinear = SearchUtils.linearSearchLinkedList(carros2, "33-CC-33");
+        System.out.println(encontradoLinear);
+
+        // 🔹 Pesquisa binária
+        System.out.println("\nPesquisa binária por matrícula 22-BB-22:");
+
+        Carro encontradoBinario = SearchUtils.binarySearchLinkedList(carros2, "22-BB-22");
+        System.out.println(encontradoBinario);
 
 
         /**

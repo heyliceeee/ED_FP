@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T> O tipo de elementos armazenados na fila.
  */
-public class LinkedQueue<T> implements QueueADT<T> {
+public class LinkedQueue<T> implements QueueADT<T>, Iterable<T> {
 
     private LinkedListNode<T> front; // Nó que representa o elemento na frente da fila.
     private LinkedListNode<T> rear; // Nó que representa o elemento na traseira da fila.
