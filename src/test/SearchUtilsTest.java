@@ -1,15 +1,86 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import structures.FP02.LinkedList;
 import structures.FP08.Carro;
 import structures.FP08.SearchUtils;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SearchUtilsTest {
+    @Test
+    void testLinearSearchFoundLinkedList() {
+        LinkedList<Carro> carros = new LinkedList<>();
+        carros.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros.addLast(new Carro("22-BB-22", "Honda", "Civic", 2020));
+        carros.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+
+        Carro resultado = SearchUtils.linearSearchLinkedList(carros, "22-BB-22");
+        assertNotNull(resultado);
+        assertEquals("22-BB-22", resultado.getMatricula());
+    }
+
+    @Test
+    void testLinearSearchNotFoundLinkedList() {
+        LinkedList<Carro> carros = new LinkedList<>();
+        carros.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+
+        Carro resultado = SearchUtils.linearSearchLinkedList(carros, "99-ZZ-99");
+        assertNull(resultado);
+    }
+
+    @Test
+    void testBinarySearchFoundLinkedList() {
+        LinkedList<Carro> carros = new LinkedList<>();
+        carros.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros.addLast(new Carro("22-BB-22", "Honda", "Civic", 2020));
+        carros.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+        carros.addLast(new Carro("44-DD-44", "BMW", "320d", 2021));
+
+        // ordenar antes da pesquisa binária
+        carros.sortLinkedList();
+
+        Carro resultado = SearchUtils.binarySearchLinkedList(carros, "33-CC-33");
+        assertNotNull(resultado);
+        assertEquals("33-CC-33", resultado.getMatricula());
+    }
+
+    @Test
+    void testBinarySearchNotFoundLinkedList() {
+        LinkedList<Carro> carros = new LinkedList<>();
+        carros.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros.addLast(new Carro("22-BB-22", "Honda", "Civic", 2020));
+        carros.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+
+        carros.sortLinkedList();
+
+        Carro resultado = SearchUtils.binarySearchLinkedList(carros, "99-ZZ-99");
+        assertNull(resultado);
+    }
+
+    @Test
+    void testBinarySearchFirstAndLastLinkedList() {
+        LinkedList<Carro> carros = new LinkedList<>();
+        carros.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros.addLast(new Carro("22-BB-22", "Honda", "Civic", 2020));
+        carros.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+        carros.addLast(new Carro("44-DD-44", "BMW", "320d", 2021));
+
+        carros.sortLinkedList();
+
+        Carro primeiro = SearchUtils.binarySearchLinkedList(carros, "11-AA-11");
+        Carro ultimo = SearchUtils.binarySearchLinkedList(carros, "44-DD-44");
+
+        assertNotNull(primeiro);
+        assertEquals("11-AA-11", primeiro.getMatricula());
+
+        assertNotNull(ultimo);
+        assertEquals("44-DD-44", ultimo.getMatricula());
+    }
+
     @Test
     void testLinearSearchFound() {
         Integer[] numeros = {10, 20, 30, 40, 50};
