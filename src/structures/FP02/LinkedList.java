@@ -233,6 +233,25 @@ public class LinkedList<T> {
     }
 
     /**
+     * Imprime recursivamente
+     */
+    public void printRecursive(){
+        printRecursive(head);
+    }
+
+    /**
+     * Imprime recursivamente os elementos
+     * @param node no atual
+     */
+    private void printRecursive(LinkedListNode<T> node){
+        if(node == null) // caso base
+            return;
+
+        System.out.print(node.getElement() + " ");
+        printRecursive(node.getNext()); // chamada recursiva
+    }
+
+    /**
      * Verifica se a lista está vazia.
      *
      * @return {@code true} se a lista estiver vazia, {@code false} caso contrário.

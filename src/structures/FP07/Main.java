@@ -1,12 +1,29 @@
 package structures.FP07;
 
+import structures.FP02.LinkedList;
+
 public class Main {
     public static void main(String[] args) {
         /**
          # Parte I
-         1. Escrever um método recursivo q imprima tds os elems de uma LL, do 1o ao último elem. Deverá ser possível usar o método pra qlqr LL à sua escolha. Testar a sol desenvolvida.
+         1. Escreve um método recursivo q imprima tds os elems de uma LL, do 1o ao último elem. Deverá ser possível usar o método pra qlqr LL à sua escolha. Testa a sol desenvolvida.
          */
+        LinkedList<String> nomes = new LinkedList<>();
+        nomes.addLast("Alice");
+        nomes.addLast("Bruno");
+        nomes.addFirst("Inês"); // entra no início
+        nomes.addLast("Carla");
 
+        System.out.println("Impressão recursiva da LinkedList de nomes:");
+        nomes.printRecursive();
+
+        LinkedList<Integer> numeros = new LinkedList<>();
+        numeros.addLast(10);
+        numeros.addFirst(20); // entra no inicio
+        numeros.addLast(30);
+
+        System.out.println("\nImpressão recursiva da LinkedList de inteiros:");
+        numeros.printRecursive();
 
 
         /**
