@@ -1,5 +1,6 @@
 package structures.FP07;
 
+import structures.FP02.DoublyLinkedList;
 import structures.FP02.LinkedList;
 
 public class Main {
@@ -27,9 +28,20 @@ public class Main {
 
 
         /**
-         * 2. Escrever 2 métodos recursivos q imprima tds os elems de uma DLL, do 1o ao último elem. Um dos métodos deverá imprimir a partir de uma ponta e o outro de outra. Deverá ser possível usar os métodos pra quaisquer DLL's à sua escolha. Testar a sol desenvolvida.
+         * 2. Escreve 2 métodos recursivos q imprima tds os elems de uma DLL, do 1o ao último elem. Um dos métodos deverá imprimir a partir de uma ponta e o outro de outra. Deverá ser possível usar os métodos pra quaisquer DLL à sua escolha. Testa a sol desenvolvida.
          */
+        DoublyLinkedList<String> lista = new DoublyLinkedList<>();
 
+        lista.addFirst("Alice");
+        lista.addFirst("Bruno");
+        lista.addFirst("Carla");
+        lista.addFirst("Duarte");
+
+        System.out.println("\nImpressão do início para o fim:");
+        lista.printForward();
+
+        System.out.println("\nImpressão do fim para o início:");
+        lista.printBackward();
 
 
         /**

@@ -98,6 +98,44 @@ public class DoublyLinkedList<T> {
     }
 
     /**
+     * Método recursivo: imprime do início para o fim
+     */
+    public void printForward() {
+        printForward(head);
+    }
+
+    /**
+     * Imprime recursivamente os elementos, do inicio para o fim
+     * @param node no atual
+     */
+    private void printForward(DoublyNode<T> node) {
+        if(node == null) // caso base
+            return;
+
+        System.out.print(node.getElement() + " ");
+        printForward(node.getNext());
+    }
+
+    /**
+     * Método recursivo: imprime do fim para o inicio
+     */
+    public void printBackward() {
+        printBackward(tail);
+    }
+
+    /**
+     * Imprime recursivamente os elementos, do fim para o inicio
+     * @param node no atual
+     */
+    private void printBackward(DoublyNode<T> node) {
+        if(node == null) // caso base
+            return;
+
+        System.out.print(node.getElement() + " ");
+        printBackward(node.getPrev());
+    }
+
+    /**
      * Devolver um array dos elementos
      * @return array
      */
