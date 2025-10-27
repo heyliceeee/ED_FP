@@ -99,8 +99,19 @@ public class Main {
 
 
         /**
-         * 4. Acrescentar o método void replace(T existingElem, T newElem), q funcione de forma recursiva, à sua implementação de LL q seja capaz de substituir tds as ocorrências do argumento existingElem pelo argumento newElem.
+         * 4. Acrescenta o método void replace(T existingElem, T newElem), q funcione de forma recursiva, à sua implementação de LL q seja capaz de substituir tds as ocorrências do argumento existingElem pelo argumento newElem.
          */
+        LinkedList<String> lista3 = new LinkedList<>();
+        lista3.addFirst("Alice");
+        lista3.addFirst("Bruno");
+        lista3.addFirst("Alice");
+        lista3.addFirst("Carla");
+
+        System.out.println("Lista original: " + lista3);
+
+        lista3.replace("Alice", "Inês");
+
+        System.out.println("Lista após replace: " + lista3);
 
 
         /**

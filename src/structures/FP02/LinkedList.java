@@ -251,6 +251,21 @@ public class LinkedList<T> {
         printRecursive(node.getNext()); // chamada recursiva
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+        LinkedListNode<T> current = head;
+
+        while (current != null) {
+            sb.append(current.getElement());
+            if (current.getNext() != null) sb.append(", ");
+            current = current.getNext();
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
+
     /**
      * Verifica se a lista está vazia.
      *
@@ -267,6 +282,31 @@ public class LinkedList<T> {
      */
     public int size() {
         return size;
+    }
+
+    /**
+     * percorre a lista e substitui todas as ocorrencias de existingElem por newElem
+     * @param existingElem elemento existente
+     * @param newElem elemento novo
+     */
+    public void replace(T existingElem, T newElem) {
+        replaceRecursive(head, existingElem, newElem);
+    }
+
+    /**
+     * percorre a lista e substitui todas as ocorrencias de existingElem por newElem
+     * @param node no atual
+     * @param existingElem elemento existente
+     * @param newElem elemento novo
+     */
+    private void replaceRecursive(LinkedListNode<T> node, T existingElem, T newElem) {
+        if (node == null) // caso base: fim da lista
+            return;
+
+        if (node.getElement().equals(existingElem)) // encontrou ocorrencia
+            node.setElement(newElem); // substitui pelo novo elemento
+
+        replaceRecursive(node.getNext(), existingElem, newElem); // chamada recursiva
     }
 
     /**
