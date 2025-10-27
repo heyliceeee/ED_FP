@@ -23,6 +23,56 @@ public class LinkedListTest {
     }
 
     @Test
+    void testReverseMultipleElements() {
+        LinkedList<String> list = new LinkedList<>();
+        list.addFirst("Duarte");
+        list.addFirst("Carla");
+        list.addFirst("Bruno");
+        list.addFirst("Alice");
+        // Lista inicial: [Alice, Bruno, Carla, Duarte]
+
+        list.reverse();
+
+        assertEquals("[Duarte, Carla, Bruno, Alice]", list.toString());
+    }
+
+    @Test
+    void testReverseSingleElement() {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.addFirst(42);
+        // Lista inicial: [42]
+
+        list.reverse();
+
+        assertEquals("[42]", list.toString());
+    }
+
+    @Test
+    void testReverseEmptyList() {
+        LinkedList<Double> list = new LinkedList<>();
+        // Lista inicial: []
+
+        list.reverse();
+
+        assertEquals("[]", list.toString());
+    }
+
+    @Test
+    void testReverseTwiceRestoresOriginal() {
+        LinkedList<Character> list = new LinkedList<>();
+        list.addFirst('C');
+        list.addFirst('B');
+        list.addFirst('A');
+        // Lista inicial: [A, B, C]
+
+        list.reverse();
+        assertEquals("[C, B, A]", list.toString());
+
+        list.reverse();
+        assertEquals("[A, B, C]", list.toString());
+    }
+
+    @Test
     void testReplaceMultipleOccurrences() {
         LinkedList<String> list = new LinkedList<>();
         list.addFirst("Alice");
