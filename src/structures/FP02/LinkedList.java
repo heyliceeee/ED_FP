@@ -271,6 +271,23 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * percorre a lista ate ao index e altera o valor do no
+     * @param index
+     * @param elem
+     */
+    public void set(int index, T elem) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException("Index: " + index);
+
+        LinkedListNode<T> current = head;
+        for (int i = 0; i < index; i++)
+            current = current.getNext();
+
+        current.setElement(elem); // substitui o valor do nó
+    }
+
+
+    /**
      * ordernar os elementos
      */
     public void sortLinkedList() {

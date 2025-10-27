@@ -97,7 +97,32 @@ public class Main {
          * ▪ Quick Sort
          * ▪ Merge Sort
          */
+        LinkedList<Carro> carros4 = new LinkedList<>();
+        carros4.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+        carros4.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros4.addLast(new Carro("44-DD-44", "BMW", "320d", 2021));
+        carros4.addLast(new Carro("22-BB-22", "Honda", "Civic", 2020));
 
+        System.out.println("Original: " + carros4);
+
+        SortUtils.selectionSortLinkedList(carros4);
+        System.out.println("Selection Sort: " + carros4);
+
+        carros4 = resetCarros();
+        SortUtils.insertionSortLinkedList(carros4);
+        System.out.println("Insertion Sort: " + carros4);
+
+        carros4 = resetCarros();
+        SortUtils.bubbleSortLinkedList(carros4);
+        System.out.println("Bubble Sort: " + carros4);
+
+        carros4 = resetCarros();
+        SortUtils.quickSortLinkedList(carros4, 0, carros4.size() - 1);
+        System.out.println("Quick Sort: " + carros4);
+
+        carros4 = resetCarros();
+        SortUtils.mergeSortLinkedList(carros4, 0, carros4.size() - 1);
+        System.out.println("Merge Sort: " + carros4);
 
 
         /**
@@ -111,5 +136,14 @@ public class Main {
          * 2. Qual é o algoritmo de ordenação + eficiente, o Quick Sort ou o Merge Sort?
          */
 
+    }
+
+    private static LinkedList<Carro> resetCarros() {
+        LinkedList<Carro> carros4 = new LinkedList<>();
+        carros4.addLast(new Carro("33-CC-33", "Ford", "Focus", 2019));
+        carros4.addLast(new Carro("11-AA-11", "Toyota", "Corolla", 2018));
+        carros4.addLast(new Carro("44-DD-44", "BMW", "320d", 2021));
+        carros4.addLast(new Carro("22-BB-22", "Honda", "Civic", 2020));
+        return carros4;
     }
 }
