@@ -54,18 +54,43 @@ public class Main {
 
 
         /**
-         * 3. Criar uma classe q represente uma entidade do mundo real e q permita ser comparável pra testar os vários métodos de ordenação apresentados na aula teórica. Pra poder usar os métodos apresentados nos slides da aula teórica terá de add as várias instâncias da classe criada num array. Testar os vários algoritmos de ordenação apresentados:
+         * 3. Cria uma classe q represente uma entidade do mundo real e q permita ser comparável pra testar os vários métodos de ordenação. Pra poder usar os métodos, terá de add as várias instâncias da classe criada num array. Testa os vários algoritmos de ordenação apresentados:
          * ▪ Selection Sort
          * ▪ Insertion Sort
          * ▪ Bubble Sort
          * ▪ Quick Sort
          * ▪ Merge Sort
-         * /
+         */
+        Carro[] carros3 = {new Carro("33-CC-33", "Ford", "Focus", 2019), new Carro("11-AA-11", "Toyota", "Corolla", 2018), new Carro("44-DD-44", "BMW", "320d", 2021), new Carro("22-BB-22", "Honda", "Civic", 2020)};
 
+        // Selection Sort
+        Carro[] copia1 = Arrays.copyOf(carros3, carros3.length);
+        SortUtils.selectionSort(copia1);
+        System.out.println("Selection Sort: " + Arrays.toString(copia1));
+
+        // Insertion Sort
+        Carro[] copia2 = Arrays.copyOf(carros3, carros3.length);
+        SortUtils.insertionSort(copia2);
+        System.out.println("Insertion Sort: " + Arrays.toString(copia2));
+
+        // Bubble Sort
+        Carro[] copia3 = Arrays.copyOf(carros3, carros3.length);
+        SortUtils.bubbleSort(copia3);
+        System.out.println("Bubble Sort: " + Arrays.toString(copia3));
+
+        // Quick Sort
+        Carro[] copia4 = Arrays.copyOf(carros3, carros3.length);
+        SortUtils.quickSort(copia4, 0, copia4.length - 1);
+        System.out.println("Quick Sort: " + Arrays.toString(copia4));
+
+        // Merge Sort
+        Carro[] copia5 = Arrays.copyOf(carros3, carros3.length);
+        SortUtils.mergeSort(copia5, 0, copia5.length - 1);
+        System.out.println("Merge Sort: " + Arrays.toString(copia5));
 
 
         /**
-         * 4. Usar o cenário definido no exercício anterior, mas alterar a ED q os armazena. No exercício anterior estávamos a usar um array e neste exercício pretendemos usar uma LL. Cm tds os métodos de ordenação tão implementados pra serem usados c um array, estes terão de ser novamente implementados. Testar e implementar os vários algoritmos de ordenação pra uma LL:
+         * 4. Usa o cenário definido no exercício anterior, mas alterar a ED q os armazena. No exercício anterior estávamos a usar um array e neste exercício pretendemos usar uma LL. Cm tds os métodos de ordenação tão implementados pra serem usados c um array, estes terão de ser novamente implementados. Testa e implementa os vários algoritmos de ordenação pra uma LL:
          * ▪ Selection Sort
          * ▪ Insertion Sort
          * ▪ Bubble Sort
