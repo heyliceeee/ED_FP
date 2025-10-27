@@ -444,4 +444,33 @@ public class DoublyLinkedListTest {
 
         assertEquals("", outContent.toString());
     }
+
+    @Test
+    void testToReversedStringWithMultipleElements() {
+        DoublyLinkedList<String> list = new DoublyLinkedList<>();
+        list.addFirst("Duarte");
+        list.addFirst("Carla");
+        list.addFirst("Bruno");
+        list.addFirst("Alice");
+
+        // Lista normal: Alice -> Bruno -> Carla -> Duarte
+        // Lista invertida esperada: Duarte, Carla, Bruno, Alice
+        String expected = "Duarte, Carla, Bruno, Alice";
+        assertEquals(expected, list.toReversedString());
+    }
+
+    @Test
+    void testToReversedStringWithOneElement() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.addFirst(42);
+
+        assertEquals("42", list.toReversedString());
+    }
+
+    @Test
+    void testToReversedStringWithEmptyList() {
+        DoublyLinkedList<Double> list = new DoublyLinkedList<>();
+
+        assertEquals("", list.toReversedString());
+    }
 }
