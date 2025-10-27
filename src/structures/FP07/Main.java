@@ -2,6 +2,7 @@ package structures.FP07;
 
 import structures.FP02.DoublyLinkedList;
 import structures.FP02.LinkedList;
+import structures.FP03.LinkedStack;
 
 public class Main {
     public static void main(String[] args) {
@@ -45,9 +46,23 @@ public class Main {
 
 
         /**
-         * 3. Desenvolver um programa pra a resolução dos problemas das Torres de Hanoi apresentado no slide 16. Demostra a sua utilização.
+         * 3. Desenvolve um programa pra a resolução dos problemas das Torres de Hanoi. Demostra a sua utilização.
          */
+        Hanoi<Integer> hanoi = new Hanoi<>();
 
+        int n = 3; // número de discos
+        LinkedStack<Integer> origem = new LinkedStack<>();
+        LinkedStack<Integer> destino = new LinkedStack<>();
+        LinkedStack<Integer> auxiliar = new LinkedStack<>();
+
+        // Inicializar a stack origem (discos maiores em baixo)
+        for (int i = n; i >= 1; i--)
+            origem.push(i);
+
+        System.out.println("Resolução das Torres de Hanoi com " + n + " discos:\n");
+        hanoi.solveHanoi(n, origem, destino, auxiliar, 'A', 'C', 'B');
+
+        System.out.println("\nEstado final da pilha destino: " + destino);
 
 
         /**

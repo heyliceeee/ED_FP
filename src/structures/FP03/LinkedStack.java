@@ -107,10 +107,17 @@ public class LinkedStack<T> implements StackADT<T> {
 
     @Override
     public String toString() {
-        return "LinkedStack{" +
-                "top=" + top +
-                ", size=" + size +
-                '}';
+        StringBuilder sb = new StringBuilder("[");
+        LinkedListNode<T> current = top;
+
+        while (current != null) {
+            sb.append(current.getElement());
+            if (current.getNext() != null) sb.append(", ");
+            current = current.getNext();
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 
     /**
