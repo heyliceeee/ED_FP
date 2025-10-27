@@ -1,12 +1,28 @@
 package structures.FP08;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         /**
          # Parte I
-         1. Criar uma classe q represente uma entidade, p.ex. um carro, assim cm algumas q ache relevantes pra o representar. Armazenar instâncias dessa entidade num array e usar os seguintes métodos de pesquisa: linear search, binary search pra encontrar um determinado elem.
+         1. Cria uma classe q represente uma entidade, p.ex. um carro, assim cm algumas q ache relevantes pra o representar. Armazenar instâncias dessa entidade num array e usar os seguintes métodos de pesquisa: linear search, binary search pra encontrar um determinado elem.
          */
+        Carro[] carros = {
+                new Carro("11-AA-11", "Toyota", "Corolla", 2018),
+                new Carro("22-BB-22", "Honda", "Civic", 2020),
+                new Carro("33-CC-33", "Ford", "Focus", 2019),
+                new Carro("44-DD-44", "BMW", "320d", 2021)
+        };
 
+        // Pesquisa linear
+        int idxLinear = SearchUtils.linearSearch(carros, carros[2]);
+        System.out.println("Linear search encontrou: " + carros[idxLinear]);
+
+        // Pesquisa binária (precisa de array ordenado)
+        Arrays.sort(carros); // ordena por matrícula
+        int idxBinario = SearchUtils.binarySearch(carros, new Carro("22-BB-22", "", "", 0));
+        System.out.println("Binary search encontrou: " + carros[idxBinario]);
 
 
         /**
