@@ -69,19 +69,23 @@ public class Main {
          * Parte II
          * 1. Quais as componentes q compõem uma definição recursiva?
          */
-
+        // R: Uma definição recursiva é composta por caso base, passo recursivo e garantia de progresso.
+        // Sem caso base → recursão infinita.
+        // Sem passo recursivo → n há recursão.
+        // Sem progresso → nnc se atinge o caso base.
 
 
         /**
          * 2. Devo usar smp a recursividade pra resolver os + diversos problemas?
          */
+        // R: A recursividade é uma ferramenta conceptual poderosa, mas n é a sol universal. O truque é sbr qd a clareza compensa e qd a eficiência deve prevalecer.
 
 
 
         /**
-         * 3. Acrescentar um método recursivo à implementação de DLL q devolva o conteúdo da list c a ordem dos elems invertida.
+         * 3. Acrescenta um método recursivo à implementação de DLL q devolva o conteúdo da list c a ordem dos elems invertida.
          */
-
+        
 
 
         /**
