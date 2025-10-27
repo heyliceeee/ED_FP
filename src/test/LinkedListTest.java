@@ -23,6 +23,68 @@ public class LinkedListTest {
     }
 
     @Test
+    void testReplaceMultipleOccurrences() {
+        LinkedList<String> list = new LinkedList<>();
+        list.addFirst("Alice");
+        list.addFirst("Bruno");
+        list.addFirst("Alice");
+        list.addFirst("Carla");
+        // Lista inicial: [Carla, Alice, Bruno, Alice]
+
+        list.replace("Alice", "Inês");
+
+        assertEquals("[Carla, Inês, Bruno, Inês]", list.toString());
+    }
+
+    @Test
+    void testReplaceSingleOccurrence() {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.addFirst(10);
+        list.addFirst(20);
+        list.addFirst(30);
+        // Lista inicial: [30, 20, 10]
+
+        list.replace(20, 99);
+
+        assertEquals("[30, 99, 10]", list.toString());
+    }
+
+    @Test
+    void testReplaceNoOccurrence() {
+        LinkedList<String> list = new LinkedList<>();
+        list.addFirst("A");
+        list.addFirst("B");
+        list.addFirst("C");
+        // Lista inicial: [C, B, A]
+
+        list.replace("X", "Y"); // não existe "X"
+
+        assertEquals("[C, B, A]", list.toString()); // lista deve ficar igual
+    }
+
+    @Test
+    void testReplaceEmptyList() {
+        LinkedList<Double> list = new LinkedList<>();
+
+        list.replace(1.1, 2.2); // não deve lançar exceção
+
+        assertEquals("[]", list.toString());
+    }
+
+    @Test
+    void testReplaceAllElements() {
+        LinkedList<String> list = new LinkedList<>();
+        list.addFirst("Z");
+        list.addFirst("Z");
+        list.addFirst("Z");
+        // Lista inicial: [Z, Z, Z]
+
+        list.replace("Z", "X");
+
+        assertEquals("[X, X, X]", list.toString());
+    }
+
+    @Test
     void testPrintRecursive() {
         LinkedList<String> list = new LinkedList<>();
         list.addLast("A");
