@@ -10,11 +10,11 @@ public class Main {
          Nota: Tal cm é explicado nos slides, n é possível add elems à tree pelo q a demonstração da sua utilização n faz grd sentido neste exercício.
          */
 
+
         /**
          * 2. Implementa uma ArrayBinaryTree cm sugerido no slide 57. A ArrayBinaryTree deverá implementar as travessias: iteratorInOrder, iteratorPostOrder, iteratorPreOrder e iteratorLevelOrder.
          * Nota: Tal cm é explicado nos slides, n é possível add elems à tree pelo q a demonstração da sua utilização n faz grd sentido neste exercício.
          */
-
 
 
         /**
